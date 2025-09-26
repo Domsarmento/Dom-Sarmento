@@ -166,15 +166,33 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 .btn-pass{ background:var(--roxinho); color:#fff }
 .btn-open{ background:var(--ciano) }
 .note{ color:#cfcfcf; font-size:13px; text-align:center; margin-top:6px }
-/* PIX modal */
+
+/* ===== PIX modal – botões dos bancos em gold com fonte branca ===== */
 .bank-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:12px }
 .bank-grid a{
-  display:block; text-align:center; padding:10px 8px; border-radius:12px; background:#1a1a1a; color:#fff; text-decoration:none; font-size:12px;
-  border:1px solid rgba(255,255,255,.08);
+  display:block; text-align:center; padding:12px 10px; border-radius:12px; text-decoration:none;
+  font-size:13px; font-weight:800; color:#fff;
+  background:
+    radial-gradient(160% 220% at 0% -40%, rgba(255,255,255,.45), transparent 45%),
+    linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 45%, var(--gold-3) 70%, var(--gold-4) 100%);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.38), 0 10px 24px rgba(0,0,0,.35);
+  text-shadow:0 1px 0 rgba(0,0,0,.35);
 }
-.bank-grid a:active{ transform:scale(.98) }
+.bank-grid a:active{
+  transform:scale(.98);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 6px 18px rgba(0,0,0,.45);
+}
 .copy-ok{ display:none; margin-top:12px; color:#9ae6b4; font-weight:800; text-align:center; font-size:14px }
 .copy-ok.show{ display:block }
+
+/* iOS tip */
+.ios-tip{
+  margin-top:12px; padding:10px 12px; border-radius:12px;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+  color:#eee; font-size:13px; text-align:center; display:none;
+}
+.ios-tip.show{ display:block }
 </style>
 </head>
 <body>
@@ -262,7 +280,6 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         <button class="car-arrow prev" aria-label="Anterior">‹</button>
         <div class="car-viewport">
           <div class="car-track">
-            <!-- CORRIGIDO: adicionada a pasta 'media/' nos caminhos -->
             <div class="car-slide"><img src="media/media:galeria1.jpg" alt="Galeria 1"></div>
             <div class="car-slide"><img src="media/media:galeria2.jpg" alt="Galeria 2"></div>
             <div class="car-slide"><img src="media/media:galeria3.jpg" alt="Galeria 3"></div>
@@ -311,6 +328,10 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
           <a href="#" data-app="caixa">Caixa</a>
           <a href="#" data-app="sicoob">Sicoob</a>
         </div>
+        <div class="ios-tip" id="iosTip">
+          iPhone: a chave PIX <strong>já foi copiada</strong>.  
+          Abra seu app do banco (via Spotlight/Ícone) e <strong>cole</strong> a chave.
+        </div>
         <div class="copy-ok" id="pixCopiedMsg">✅ Chave PIX copiada!</div>
       </div>
     </div>
@@ -323,17 +344,17 @@ const WIFI = {
   pass: 'estampariadigital.',
   type: 'WPA'
 };
-const PIX_KEY = '48991746304'; // <-- única declaração
+const PIX_KEY = '48991746304'; // única declaração
 
-/* Util */
+/* Utils */
 async function copyToClipboard(text){ try { await navigator.clipboard.writeText(text); } catch(e) {} }
 const isAndroid = /Android/i.test(navigator.userAgent);
 const isIOS     = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-/* ===== Vídeo autoplay reforçado ===== */
+/* ===== Vídeo autoplay ===== */
 (()=>{const v=document.getElementById('videoBarbearia');if(!v)return;const p=()=>v.play().catch(()=>{});if(v.autoplay){if(document.visibilityState==='visible')p();document.addEventListener('visibilitychange',p,{passive:true});window.addEventListener('touchstart',p,{once:true,passive:true});}})();
 
-/* ===== Carrossel simples ===== */
+/* ===== Carrossel ===== */
 ((rootId,intervalMs=4000)=>{
   const root=document.getElementById(rootId||'galeria'); if(!root) return;
   const track=root.querySelector('.car-track');
@@ -385,16 +406,15 @@ document.getElementById('wifiOpenAndroid').addEventListener('click',async()=>{
 
 /* ===== Pix modal + atalhos ===== */
 const pixModal=document.getElementById('pixModal');
+const iosTip=document.getElementById('iosTip');
 document.getElementById('btnPix').addEventListener('click',async()=>{
   await copyToClipboard(PIX_KEY);
   document.getElementById('pixCopiedMsg').classList.add('show');
+  if(isIOS) iosTip.classList.add('show'); else iosTip.classList.remove('show');
   openModal(pixModal);
 });
 document.getElementById('closePix').addEventListener('click',()=>closeModal(pixModal));
 pixModal.addEventListener('click',e=>{ if(e.target.id==='pixModal') closeModal(pixModal); });
-
-const isAndroidUA=/Android/i.test(navigator.userAgent);
-const isIOSUA=/iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 const BANKS={
   nubank:{scheme:'nubank://',pkg:'com.nu.production'},
@@ -407,12 +427,12 @@ const BANKS={
 
 function openBankApp(cfg){
   const store=`https://play.google.com/store/apps/details?id=${cfg.pkg}`;
-  if(isAndroidUA){
+  if(isAndroid){
     try{ window.location.href=`intent://open#Intent;package=${cfg.pkg};scheme=${cfg.scheme.replace('://','')};end`; }catch(e){}
     setTimeout(()=>{ window.open(store,'_blank'); },1400);
-  }else if(isIOSUA){
-    const i=document.createElement('iframe'); i.style.display='none'; i.src=cfg.scheme;
-    document.body.appendChild(i); setTimeout(()=>document.body.removeChild(i),1500);
+  }else if(isIOS){
+    // iOS tenta abrir via scheme; se o Safari bloquear, o usuário já tem a instrução visível.
+    try{ window.location.href = cfg.scheme; }catch(e){}
   }else{
     window.open(store,'_blank');
   }
