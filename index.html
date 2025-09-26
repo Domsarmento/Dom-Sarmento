@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dom Sarmento Barbearia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Estilos básicos para o corpo e o plano de fundo */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; /* Cor de fallback caso a imagem não carregue */
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            /* Use sua imagem de fundo, se preferir remova as 4 linhas abaixo e deixe apenas a cor de fundo */
+            background-image: url('background-dom-sarmento.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            background-attachment: fixed; 
+        }
+
+        /* Sobreposição escura para melhorar a leitura do texto (60% de opacidade) */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); 
+            z-index: -1; 
+        }
+
+        .container {
+            max-width: 400px; 
+            width: 100%;
+            box-sizing: border-box;
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .logo {
+            width: 180px; 
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 1.2em;
+            color: #e0e0e0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: normal; /* Deixa mais parecido com o modelo */
+        }
+
+        .button-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; 
+            margin-bottom: 40px;
+        }
+
+        .action-button {
+            display: flex;
+            align-items: center;
+            background-color: #333333; 
+            color: #ffffff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Garante que o texto principal fique alinhado à esquerda */
+            text-align: left;
+        }
+
+        .action-button:hover {
+            background-color: #555555;
+        }
+
+        .action-button i {
+            margin-right: 15px;
+            font-size: 1.2em;
+            width: 25px; /* Garante que todos os ícones fiquem alinhados */
+            text-align: center;
+        }
+        
+        .button-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .secondary-text {
+            font-size: 0.7em; /* Texto secundário menor */
+            font-weight: normal;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+
+        .button-schedule {
+            /* Cor Dourada */
+            background: linear-gradient(to right, #daa520, #ffc433); 
+            color: #000000;
+        }
+
+        .button-schedule i {
+            color: #000000;
+        }
+
+        .button-schedule:hover {
+            background: linear-gradient(to right, #ffc433, #daa520);
+        }
+
+        /* Estilos específicos para o PIX */
+        .pix-container {
+            display: flex;
+            flex-direction: column;
+            background-color: #333333;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .pix-info {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px 10px;
+        }
+
+        .pix-key-button {
+            background-color: #20b2aa; /* Cor de destaque para a chave PIX (Turquesa/Verde-água) */
+            color: #000000;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 0 0 8px 8px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .pix-key-button:hover {
+            background-color: #1a9c94;
+        }
+
+        .pix-key-button .key-text {
+            font-size: 0.9em;
+            font-weight: normal;
+            margin-left: 5px;
+        }
+
+        .pix-info i {
+            color: #20b2aa; 
+            margin-right: 15px;
+            font-size: 1.2em;
+            width: 25px; 
+            text-align: center;
+        }
+
+        .pix-info .main-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .pix-info .main-text span {
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .pix-info .main-text .secondary-text {
+            margin-top: 0;
+            font-size: 0.7em;
+            opacity: 0.8;
+            font-weight: normal;
+        }
+        
+        footer {
+            width: 100%;
+            padding: 20px 0;
+            font-size: 0.9em;
+            color: #cccccc;
+            margin-top: auto; 
+            /* Para replicar a parte inferior da imagem (Galeria) */
+            padding-bottom: 60px; /* Espaço para a barra de navegação */
+        }
+        
+        .gallery {
+            display: flex;
+            overflow-x: auto; /* Permite rolar as imagens horizontalmente */
+            gap: 5px;
+            margin-top: 15px;
+            padding-bottom: 10px;
+        }
+
+        .gallery img {
+            width: 100px; /* Largura das miniaturas */
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* Estilos para a navegação inferior (como no app) */
+        .bottom-nav {
+            background-color: #111111;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        .bottom-nav a {
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.7em;
+            padding: 5px;
+        }
+
+        .bottom-nav a i {
+            font-size: 1.4em;
+            margin-bottom: 3px;
+        }
+
+        .bottom-nav a.active {
+            color: #20b2aa; 
+        }
+
+        .bottom-nav .center-button {
+            background-color: #20b2aa;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            top: -15px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            color: #ffffff;
+            font-size: 1.8em;
+        }
+
+        .bottom-nav .center-button i {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="logo-dom-sarmento.png" alt="Logo Dom Sarmento Barbearia" class="logo">
+            <h1>TRADIÇÃO E ESTILO EM CADA CORTE</h1>
+        </header>
+
+        <main>
+            <div class="button-group">
+                <a href="URL_AGENDAMENTO" class="action-button button-schedule" target="_blank">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div class="button-text-wrapper">
+                        AGENDAR HORÁRIO
+                        <span class="secondary-text">Reserve seu corte via Apberber</span>
+                    </div>
+                </a>
+
+                <a href="https://wa.me/SEU_NUMERO_WHATSAPP" class="action-button" target="_blank">
+                    <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                    <div class="button-text-wrapper">
+                        WHATSAPP
+                        <span class="secondary-text">Fale direto com recepção</span>
+                    </div>
+                </a>
+
+                <a href="URL_AVALIACOES_GOOGLE" class="action-button" target="_blank">
+                    <i class="fas fa-star" style="color: #FFD700;"></i>
+                    <div class="button-text-wrapper">
+                        AVALIAÇÕES NO GOOGLE
+                        <span class="secondary-text">Conte como foi sura experiência</span>
+                    </div>
+                </a>
+
+                <a href="https://www.instagram.com/domsarmento" class="action-button" target="_blank">
+                    <i class="fab fa-instagram" style="color: #E1306C;"></i>
+                    <div class="button-text-wrapper">
+                        INSTAGRAM OFICIAL
+                        <span class="secondary-text">@domsarmento</span>
+                    </div>
+                </a>
+
+                <div class="pix-container">
+                    <div class="pix-info">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <div class="main-text">
+                            <span>PAGAMENTO VIA PIX</span>
+                            <span class="secondary-text">@domsarmento</span>
+                        </div>
+                    </div>
+                    <a href="#" class="pix-key-button" onclick="navigator.clipboard.writeText('48991746304'); alert('Chave PIX 48991746304 copiada com sucesso!'); return false;">
+                        COPIAR CHAVE <span class="key-text">48991746304</span>
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>MAIS QUE CORTES, UMA EXPERIÊNCIA DOM SARMENTO</p>
+            <div class="gallery">
+                <img src="corte1.jpg" alt="Corte de cabelo 1">
+                <img src="corte2.jpg" alt="Corte de cabelo 2">
+                <img src="corte3.jpg" alt="Corte de cabelo 3">
+                <img src="corte4.jpg" alt="Corte de cabelo 4">
+                <img src="corte5.jpg" alt="Corte de cabelo 5">
+            </div>
+        </footer>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="#" class="active"><i class="fas fa-home"></i>Home</a>
+        <a href="#"><i class="fas fa-compass"></i>Explorar</a>
+        <a href="#" class="center-button"><i class="fas fa-plus"></i></a>
+        <a href="#"><i class="fas fa-heart"></i>Favoritos</a>
+        <a href="#"><i class="fas fa-user-circle"></i>Perfil</a>
+    </nav>
+</body>
+</html>
