@@ -11,47 +11,53 @@
   --gold-1:#f9eebe; --gold-2:#e9c97f; --gold-3:#cfa156; --gold-4:#8c652f;
   --steel-top:#3b3b3b; --steel-mid:#262626; --steel-bot:#141414;
   --tagline:#e3c676; --ring:rgba(255,255,255,.08);
-  --ciano:#69dfd6; --roxo:#b7a3ff;
+  --ciano:#69dfd6; --roxinho:#a78bfa;
 }
 
-/* ===== Base & BG ===== */
-*{box-sizing:border-box} html,body{height:100%}
+*{box-sizing:border-box}
+html,body{height:100%}
 body{
   margin:0; color:var(--text);
   font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  position:relative; overflow-x:hidden; background:#0b0b0b;
+  position:relative; overflow-x:hidden;
 }
-body::before{ content:""; position:fixed; inset:0;
-  background:url('background-dom-sarmento.jpg') center/cover no-repeat; z-index:0; }
-body::after{ content:""; position:fixed; inset:0;
-  background:linear-gradient(180deg, rgba(0,0,0,.40), rgba(0,0,0,.65) 50%, rgba(0,0,0,.85)); z-index:0; }
-.page{position:relative; z-index:1; max-width:520px; margin:0 auto; padding:18px 14px 56px}
+body::before{
+  content:""; position:fixed; inset:0;
+  background:url('background-dom-sarmento.jpg') center/cover no-repeat, #0b0b0b; z-index:0;
+}
+body::after{
+  content:""; position:fixed; inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.40), rgba(0,0,0,.65) 50%, rgba(0,0,0,.85)); z-index:0;
+}
+.page{position:relative; z-index:1; max-width:480px; margin:0 auto; padding:28px 18px 46px}
 
 /* ===== Header ===== */
-.header{text-align:center; margin:0 0 6px}
+.header{text-align:center; margin:0 0 8px}
 .logo{
-  width:clamp(300px, 72vw, 400px);
+  width:clamp(260px, 68vw, 360px);
   display:block; margin:0 auto 6px;
   filter:drop-shadow(0 12px 22px rgba(0,0,0,.40));
   mix-blend-mode:multiply;
 }
 .tagline{
   color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase;
-  font-size:clamp(18px,4.4vw,22px);
-  margin:4px auto 10px; /* +próxima da logo e do 1º botão */
+  font-size:clamp(18px,4vw,22px);
+  margin:6px auto 12px; /* mais perto da logo e do botão */
 }
 
-/* ===== Cards (tamanhos otimizados p/ mobile) ===== */
-.stack{display:flex; flex-direction:column; gap:14px; margin:8px 0 28px}
+/* ===== Cards ===== */
+.stack{display:flex; flex-direction:column; gap:14px; margin:12px 0 28px}
 .btn{
   position:relative; overflow:hidden; display:flex; align-items:center; gap:14px;
-  padding:16px; min-height:92px; border-radius:24px; text-decoration:none; color:var(--text);
+  padding:16px 18px; min-height:88px; border-radius:24px; text-decoration:none; color:var(--text);
 }
-.btn::before{ content:""; position:absolute; inset:0; border-radius:26px; padding:2px;
+.btn::before{
+  content:""; position:absolute; inset:0; border-radius:26px; padding:2px;
   background:linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 40%, var(--gold-3) 75%, var(--gold-4) 100%);
   -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite:xor; mask-composite:exclude;
-  box-shadow:0 0 22px rgba(255,215,130,.22), 0 14px 30px rgba(0,0,0,.45); pointer-events:none;
+  box-shadow:0 0 22px rgba(255,215,130,.22), 0 14px 30px rgba(0,0,0,.45);
+  pointer-events:none;
 }
 .btn--gold{
   background:
@@ -59,9 +65,12 @@ body::after{ content:""; position:fixed; inset:0;
     linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 45%, var(--gold-3) 70%, var(--gold-4) 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.38), 0 18px 36px rgba(255,214,120,.28);
 }
-.btn--gold::after{ content:""; position:absolute; left:12px; right:12px; top:28%;
-  height:18%; border-radius:20px;
-  background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0)); filter:blur(1px); }
+.btn--gold::after{
+  content:""; position:absolute; left:12px; right:12px; top:26%;
+  height:18%; border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0));
+  filter:blur(1px); pointer-events:none;
+}
 .btn--dark{
   background:
     linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0) 24%) top/100% 50% no-repeat,
@@ -69,76 +78,104 @@ body::after{ content:""; position:fixed; inset:0;
     linear-gradient(180deg, var(--steel-top) 0%, var(--steel-mid) 55%, var(--steel-bot) 100%);
 }
 .icon{
-  width:50px; height:50px; object-fit:contain; flex:0 0 50px; display:block;
+  width:48px; height:48px; object-fit:contain; flex:0 0 48px; display:block;
   filter: drop-shadow(0 2px 0 rgba(0,0,0,.15)) drop-shadow(0 6px 10px rgba(0,0,0,.35));
 }
 .btn--gold .icon{ filter: drop-shadow(0 2px 0 rgba(0,0,0,.10)) drop-shadow(0 6px 10px rgba(0,0,0,.28)); }
 .title{
-  font-weight:800; text-transform:uppercase; letter-spacing:.01em; line-height:1.1;
-  font-size:clamp(18px,4.2vw,22px);
+  font-weight:800; text-transform:uppercase; letter-spacing:.01em; line-height:1.12;
+  font-size:clamp(18px,4vw,21px);
 }
-.sub{ font-size:clamp(13px,3.5vw,15px); color:var(--muted); margin-top:6px }
-.btn--gold .title{ color:#121212 } .btn--gold .sub{ color:#1f1f1f; opacity:.86 }
-
-/* PIX chip */
+.sub{ font-size:clamp(13px,3.4vw,15px); color:var(--muted); margin-top:4px }
+.btn--gold .title{ color:#121212 }
+.btn--gold .sub{ color:#1f1f1f; opacity:.86 }
 .chip{
-  flex:0 0 auto; border:0; cursor:pointer; padding:10px 12px; border-radius:14px;
-  background:var(--ciano); color:#083033; font-weight:800; font-size:13px; line-height:1.1;
+  flex:0 0 auto; border:0; cursor:pointer; padding:10px 14px; border-radius:14px;
+  background:var(--ciano); color:#083033; font-weight:800; font-size:13px;
+  line-height:1.15; text-align:center; white-space:nowrap;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
-  white-space:nowrap; max-width:46%; text-align:center;
 }
 
 /* ===== VÍDEO ===== */
-.section{ margin:18px auto 10px }
-.block{ margin:8px 0 18px; padding:14px; background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-  border-radius:18px; box-shadow:inset 0 0 0 1px var(--ring), 0 8px 40px rgba(0,0,0,.45); }
+.section{ margin:18px auto 12px }
+.block{
+  margin:8px 0 18px;
+  padding:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border-radius:18px;
+  box-shadow:inset 0 0 0 1px var(--ring), 0 8px 40px rgba(0,0,0,.45);
+}
 .video-shell{ border-radius:18px; overflow:hidden; background:#000; }
 video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 
 /* ===== Slogan ===== */
-.footer{text-align:center; margin-top:8px}
+.footer{text-align:center; margin-top:4px}
 .footer .slogan{ color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase }
 
 /* ===== CARROSSEL / GALERIA ===== */
-.gallery-title{ margin:0 0 10px; font-weight:800; font-size:clamp(18px,4vw,22px); letter-spacing:.02em; }
+.gallery-title{
+  margin:0 0 12px; font-weight:800;
+  font-size:clamp(18px,4vw,22px); letter-spacing:.02em;
+}
 .carousel{ position:relative }
-.car-viewport{ overflow:hidden; border-radius:18px; background:#000;
-  box-shadow:inset 0 0 0 1px var(--ring), 0 8px 40px rgba(0,0,0,.45); }
+.car-viewport{
+  overflow:hidden; border-radius:18px; background:#000;
+  box-shadow:inset 0 0 0 1px var(--ring), 0 8px 40px rgba(0,0,0,.45);
+}
 .car-track{ display:flex; transition:transform .45s ease; will-change:transform }
 .car-slide{ flex:0 0 100% }
-.car-slide img{ width:100%; height:auto; display:block; aspect-ratio:9/16; object-fit:cover; }
-.car-arrow{ position:absolute; top:50%; transform:translateY(-50%);
-  width:40px; height:40px; border-radius:10px; border:1px solid rgba(255,255,255,.4);
-  background:rgba(0,0,0,.35); color:#fff; font-size:22px; line-height:38px; text-align:center;
-  cursor:pointer; user-select:none; backdrop-filter:blur(4px); }
-.car-arrow:hover{ background:rgba(0,0,0,.55) } .car-arrow:active{ transform:translateY(-50%) scale(.98) }
+.car-slide img{
+  width:100%; height:auto; display:block; aspect-ratio:9/16; object-fit:cover;
+}
+.car-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:36px; height:36px; border-radius:10px; border:1px solid rgba(255,255,255,.4);
+  background:rgba(0,0,0,.35); color:#fff; font-size:20px; line-height:34px; text-align:center;
+  cursor:pointer; user-select:none; backdrop-filter:blur(4px);
+}
+.car-arrow:hover{ background:rgba(0,0,0,.55) }
+.car-arrow:active{ transform:translateY(-50%) scale(.98) }
 .car-arrow.prev{ left:8px } .car-arrow.next{ right:8px }
 
-/* ===== MODAL WIFI (layout refinado) ===== */
-.modal{ position:fixed; inset:0; background:rgba(0,0,0,.78); display:none; place-items:center; z-index:60; padding:16px }
+/* ====== MODAIS (Wi-Fi e PIX) ====== */
+.modal{ position:fixed; inset:0; background:rgba(0,0,0,.78); display:none; place-items:center; z-index:50; padding:16px }
 .modal.open{ display:grid }
-.modal-card{
-  width:min(520px, 96vw);
-  background:linear-gradient(180deg,#101010,#0f0f0f);
-  border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,.6), inset 0 0 0 1px var(--ring); color:#fff;
-  overflow:hidden;
+.card{
+  width:min(520px, 96vw); background:#111; color:#fff; border-radius:18px; overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.6), inset 0 0 0 1px var(--ring);
 }
-.modal-head{ display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.08) }
-.modal-head h3{ margin:0; font-size:18px; letter-spacing:.02em }
-.modal-close{ background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:#fff; border-radius:10px; padding:8px 10px; cursor:pointer }
-.modal-body{ padding:18px; text-align:center }
-.qr-title{ margin:0 auto 10px; width:fit-content; padding:8px 14px; border-radius:12px; font-weight:800;
-  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); }
-.qr-wrap{ display:inline-block; background:#0b0b0b; padding:12px; border-radius:16px; box-shadow:inset 0 0 0 1px var(--ring); }
-.qr-wrap img, .qr-wrap canvas{ width:min(360px,80vw); height:auto; display:block; border-radius:12px }
-.wifi-name{ margin:14px 0 16px; font-weight:800; font-size:16px }
-.btn-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
-.btn-wifi{ border:0; border-radius:12px; padding:11px 14px; color:#081a1b; font-weight:800; cursor:pointer; font-size:14px }
-.btn-ssid{ background:var(--ciano) } .btn-pass{ background:var(--roxo); color:#1a123b } .btn-android{ background:#72e9e1 }
-.helper{ margin-top:14px; color:#d7d7d7; font-size:13px; opacity:.9 }
+.card header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.08); background:#0f0f0f;
+}
+.card header h3{ margin:0; font-size:18px }
+.close-btn{ background:#222; border:1px solid rgba(255,255,255,.2); color:#fff; border-radius:10px; padding:8px 10px; cursor:pointer }
+.card .body{ padding:18px }
+.qr-wrap{
+  border-radius:14px; padding:10px; background:#000; width:min(360px,80vw); margin:0 auto 12px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.qr-wrap img{ width:100%; height:auto; display:block }
+.center{text-align:center}
+.btn-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:12px 0 }
+.btn-small{
+  border:0; border-radius:12px; padding:10px 12px; font-weight:700; cursor:pointer;
+  color:#0b0b0b;
+}
+.btn-ssid{ background:var(--ciano) }
+.btn-pass{ background:var(--roxinho); color:#fff }
+.btn-open{ background:var(--ciano) }
+.note{ color:#cfcfcf; font-size:13px; text-align:center; margin-top:6px }
 
-/* pausa carrossel no hover (desktop) */
-.carousel:hover{ --pause:1 }
+/* PIX modal */
+.bank-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:12px }
+.bank-grid a{
+  display:block; text-align:center; padding:10px 8px; border-radius:12px; background:#1a1a1a; color:#fff; text-decoration:none; font-size:12px;
+  border:1px solid rgba(255,255,255,.08);
+}
+.bank-grid a:active{ transform:scale(.98) }
+.copy-ok{ display:none; margin-top:8px; color:#9ae6b4; font-weight:700; text-align:center }
+.copy-ok.show{ display:block }
 </style>
 </head>
 <body>
@@ -149,7 +186,6 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
     </header>
 
     <section class="stack">
-      <!-- Agendar -->
       <a class="btn btn--gold" href="https://sistema.appbarber.com.br/login.php" target="_blank" rel="noopener">
         <img class="icon" src="media/media:calendar.png" alt="Calendário">
         <div>
@@ -158,16 +194,14 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         </div>
       </a>
 
-      <!-- Wi-Fi (abre modal) -->
-      <button class="btn btn--dark" id="btnWifi" type="button">
+      <a class="btn btn--dark" href="#" id="btnWifi">
         <img class="icon" src="media/media:wifi.png" alt="Wi-Fi">
         <div>
           <div class="title">Conectar ao Wi-Fi</div>
           <div class="sub">Internet liberada para clientes</div>
         </div>
-      </button>
+      </a>
 
-      <!-- Avaliações -->
       <a class="btn btn--dark" href="https://g.page/r/CWGiPPWDayclEAE/review" target="_blank" rel="noopener">
         <img class="icon" src="media/media:star.png" alt="Avaliações no Google">
         <div>
@@ -176,7 +210,6 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         </div>
       </a>
 
-      <!-- Instagram -->
       <a class="btn btn--dark" href="https://www.instagram.com/domsarmento" target="_blank" rel="noopener">
         <img class="icon" src="media/media:instagram.png" alt="Instagram">
         <div>
@@ -185,7 +218,6 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         </div>
       </a>
 
-      <!-- WhatsApp -->
       <a class="btn btn--dark" href="https://wa.me/5548999535888" target="_blank" rel="noopener">
         <img class="icon" src="media/media:whatsapp.png" alt="WhatsApp">
         <div>
@@ -194,10 +226,9 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         </div>
       </a>
 
-      <!-- PIX -->
       <div class="btn btn--dark">
         <img class="icon" src="media/media:pix.png" alt="Pix">
-        <div style="flex:1; min-width:0">
+        <div style="flex:1">
           <div class="title">Pagamento via Pix</div>
           <div class="sub">@domsarmento</div>
         </div>
@@ -232,10 +263,10 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         <button class="car-arrow prev" aria-label="Anterior">‹</button>
         <div class="car-viewport">
           <div class="car-track">
-            <div class="car-slide"><img src="media/media:galeria1.jpg" alt="Galeria 1"></div>
-            <div class="car-slide"><img src="media/media:galeria2.jpg" alt="Galeria 2"></div>
-            <div class="car-slide"><img src="media/media:galeria3.jpg" alt="Galeria 3"></div>
-            <div class="car-slide"><img src="media/media:galeria4.jpg" alt="Galeria 4"></div>
+            <div class="car-slide"><img src="media/galeria1.jpg" alt="Galeria 1"></div>
+            <div class="car-slide"><img src="media/galeria2.jpg" alt="Galeria 2"></div>
+            <div class="car-slide"><img src="media/galeria3.jpg" alt="Galeria 3"></div>
+            <div class="car-slide"><img src="media/galeria4.jpg" alt="Galeria 4"></div>
           </div>
         </div>
         <button class="car-arrow next" aria-label="Próximo">›</button>
@@ -243,37 +274,67 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
     </section>
   </main>
 
-  <!-- MODAL Wi-Fi -->
+  <!-- ===== MODAL WI-FI ===== -->
   <div class="modal" id="wifiModal" aria-hidden="true">
-    <div class="modal-card">
-      <div class="modal-head">
-        <h3>Conectar ao Wi-Fi</h3>
-        <button class="modal-close" id="wifiClose">Fechar ✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="qr-title">QR do Wi-Fi</div>
-        <div class="qr-wrap"><img id="wifiQR" alt="QR do Wi-Fi" /></div>
-        <div class="wifi-name" id="wifiName">Rede: —</div>
-        <div class="btn-row">
-          <button class="btn-wifi btn-ssid" id="copySsid">Copiar SSID</button>
-          <button class="btn-wifi btn-pass" id="copyPass">Copiar senha</button>
-          <button class="btn-wifi btn-android" id="openWifi">Abrir Wi-Fi (Android)</button>
+    <div class="card" role="dialog" aria-modal="true" aria-labelledby="wifiTitle">
+      <header>
+        <h3 id="wifiTitle">Conectar ao Wi-Fi</h3>
+        <button class="close-btn" id="closeWifi">Fechar ✕</button>
+      </header>
+      <div class="body">
+        <div class="qr-wrap">
+          <img id="wifiQr" alt="QR do Wi-Fi">
         </div>
-        <div class="helper">Aponte a câmera para o QR para conectar automaticamente. No iPhone, abra Ajustes &gt; Wi-Fi.</div>
+        <div class="center" id="wifiRede">Rede:</div>
+        <div class="btn-row">
+          <button class="btn-small btn-ssid" id="copySsid">Copiar SSID</button>
+          <button class="btn-small btn-pass" id="copyPass">Copiar senha</button>
+        </div>
+        <div class="center">
+          <button class="btn-small btn-open" id="wifiOpenAndroid">Abrir Wi-Fi (Android)</button>
+        </div>
+        <div class="note">Aponte a câmera para o QR para conectar automaticamente. No iPhone, abra Ajustes &gt; Wi-Fi.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL PIX ===== -->
+  <div class="modal" id="pixModal" aria-hidden="true">
+    <div class="card" role="dialog" aria-modal="true" aria-labelledby="pixTitle">
+      <header>
+        <h3 id="pixTitle">Pix — Chave copiada</h3>
+        <button class="close-btn" id="closePix">Fechar ✕</button>
+      </header>
+      <div class="body">
+        <div class="center">Use um atalho abaixo para abrir seu banco. Se não abrir, a chave já está no seu clipboard.</div>
+        <div class="bank-grid">
+          <a href="nubank://"    >Nubank</a>
+          <a href="mercadopago://">Mercado Pago</a>
+          <a href="itau://"      >Itaú</a>
+          <a href="bradesco://"  >Bradesco</a>
+          <a href="caixa://"     >Caixa</a>
+          <a href="sicoob://"    >Sicoob</a>
+        </div>
+        <div class="copy-ok" id="pixCopiedMsg">✅ Chave PIX copiada!</div>
       </div>
     </div>
   </div>
 
 <script>
-/* ===== Configurações ===== */
-const PIX_KEY = '48991746304';
+/* ========= Configurações ========= */
 const WIFI = {
   ssid: 'Lukanna Estamparia_5G',
   pass: 'estampariadigital.',
-  type: 'WPA'
+  type: 'WPA' // WEP | WPA | nopass
 };
+const PIX_KEY = '48991746304';
 
-/* Vídeo autoplay robusto (mobile) */
+/* Util */
+async function copyToClipboard(text){
+  try { await navigator.clipboard.writeText(text); } catch(e) {}
+}
+
+/* ===== Vídeo autoplay reforçado ===== */
 (function () {
   const v = document.getElementById('videoBarbearia');
   if (!v) return;
@@ -285,112 +346,80 @@ const WIFI = {
   }
 })();
 
-/* ===== PIX copy + share ===== */
-document.getElementById('btnPix').addEventListener('click', async ()=>{
-  try{ await navigator.clipboard.writeText(PIX_KEY); }catch(e){}
-  if (navigator.share){
-    try{ await navigator.share({title:'Chave PIX', text:`Chave PIX: ${PIX_KEY}`}); }
-    catch(e){}
-  } else {
-    alert(`Chave PIX copiada!\n${PIX_KEY}`);
-  }
-});
-
-/* ===== Helpers Wi-Fi ===== */
-function buildWifiString(cfg){
-  const esc = s => String(s).replace(/([\\;,:"])/g,'\\$1');
-  return `WIFI:T:${cfg.type};S:${esc(cfg.ssid)};P:${esc(cfg.pass)};;`;
-}
-function setWifiQR(imgEl, payload){
-  // 1ª tentativa: Google Charts
-  const url1 = 'https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=' + encodeURIComponent(payload);
-  // Fallback: qrserver
-  const url2 = 'https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=' + encodeURIComponent(payload);
-  imgEl.onerror = ()=>{ if (imgEl.dataset.tried!=='2'){ imgEl.dataset.tried='2'; imgEl.src=url2; } };
-  imgEl.src = url1;
-}
-
-/* ===== Wi-Fi Modal ===== */
-const wifiModal = document.getElementById('wifiModal');
-const wifiQR    = document.getElementById('wifiQR');
-const wifiName  = document.getElementById('wifiName');
-
-function openWifiModal(){
-  const payload = buildWifiString(WIFI);
-  setWifiQR(wifiQR, payload);
-  wifiName.textContent = 'Rede: ' + WIFI.ssid;
-  wifiModal.classList.add('open');
-  wifiModal.setAttribute('aria-hidden','false');
-}
-document.getElementById('btnWifi').addEventListener('click', openWifiModal);
-document.getElementById('wifiClose').addEventListener('click', ()=>{
-  wifiModal.classList.remove('open'); wifiModal.setAttribute('aria-hidden','true');
-});
-wifiModal.addEventListener('click', (e)=>{ if(e.target===wifiModal){ wifiModal.classList.remove('open'); wifiModal.setAttribute('aria-hidden','true'); } });
-
-document.getElementById('copySsid').addEventListener('click', async ()=>{
-  try{ await navigator.clipboard.writeText(WIFI.ssid); alert('SSID copiado!'); }catch(e){}
-});
-document.getElementById('copyPass').addEventListener('click', async ()=>{
-  try{ await navigator.clipboard.writeText(WIFI.pass); alert('Senha copiada!'); }catch(e){}
-});
-
-/* Abrir tela de Wi-Fi no Android (tenta vários formatos de intent) */
-document.getElementById('openWifi').addEventListener('click', ()=>{
-  const intents = [
-    'intent:#Intent;action=android.settings.WIFI_SETTINGS;end',
-    'intent://wifi/#Intent;scheme=android-app;package=com.android.settings;action=android.settings.WIFI_SETTINGS;end',
-    'android.settings.WIFI_SETTINGS'
-  ];
-  let tried = 0;
-  const tryNext = () => {
-    if (tried >= intents.length){
-      alert('Abra as Configurações do sistema e toque em Wi-Fi para conectar.');
-      return;
-    }
-    const i = intents[tried++];
-    try{
-      if (i.startsWith('intent:')){
-        window.location.href = i;
-      } else {
-        window.open(i, '_self');
-      }
-      // se o browser bloquear, tenta o próximo após um pequeno delay
-      setTimeout(()=>{ tryNext(); }, 350);
-    }catch(e){ tryNext(); }
-  };
-  tryNext();
-});
-
-/* ===== Carrossel simples com autoplay + setas + swipe ===== */
-(function initCarousel(rootId='galeria', intervalMs=4000){
-  const root   = document.getElementById(rootId); if(!root) return;
+/* ===== Carrossel simples ===== */
+(function initCarousel(rootId, intervalMs=4000){
+  const root   = document.getElementById(rootId || 'galeria');
+  if(!root) return;
   const track  = root.querySelector('.car-track');
   const slides = Array.from(root.querySelectorAll('.car-slide'));
   const prev   = root.querySelector('.prev');
   const next   = root.querySelector('.next');
   let index = 0, timer, paused = false;
 
-  function go(i){ index = (i + slides.length) % slides.length; track.style.transform = `translateX(${-index*100}%)`; }
+  function go(i){
+    index = (i + slides.length) % slides.length;
+    track.style.transform = `translateX(${-index*100}%)`;
+  }
   function start(){ stop(); timer = setInterval(()=>{ if(!paused) go(index+1); }, intervalMs); }
   function stop(){ if(timer) clearInterval(timer); }
-
   prev.addEventListener('click', ()=>{ go(index-1); start(); });
   next.addEventListener('click', ()=>{ go(index+1); start(); });
   root.addEventListener('mouseenter', ()=> paused = true);
   root.addEventListener('mouseleave', ()=> paused = false);
   root.addEventListener('touchstart', ()=> paused = true, {passive:true});
   root.addEventListener('touchend', ()=> paused = false);
-
   let sx=0, dx=0;
   root.addEventListener('touchstart', e=>{ sx = e.touches[0].clientX; }, {passive:true});
   root.addEventListener('touchmove',  e=>{ dx = e.touches[0].clientX - sx; }, {passive:true});
   root.addEventListener('touchend',   ()=>{ if(Math.abs(dx) > 40){ dx<0 ? go(index+1) : go(index-1); start(); } sx=dx=0; });
-
   document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'hidden') stop(); else start(); });
-
   go(0); start();
 })();
+
+/* ====== Modal helpers ====== */
+function openModal(el){ el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
+function closeModal(el){ el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
+
+/* ====== Wi-Fi modal ====== */
+const wifiModal = document.getElementById('wifiModal');
+document.getElementById('btnWifi').addEventListener('click', (e)=>{
+  e.preventDefault();
+  // monta QR (API simples)
+  const payload = `WIFI:T:${encodeURIComponent(WIFI.type)};S:${encodeURIComponent(WIFI.ssid)};P:${encodeURIComponent(WIFI.pass)};;`;
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent(payload)}&margin=10`;
+  const img = document.getElementById('wifiQr');
+  img.src = qrUrl;
+  document.getElementById('wifiRede').textContent = `Rede: ${WIFI.ssid}`;
+  openModal(wifiModal);
+});
+document.getElementById('closeWifi').addEventListener('click', ()=> closeModal(wifiModal));
+wifiModal.addEventListener('click', (e)=>{ if(e.target.id==='wifiModal') closeModal(wifiModal); });
+
+document.getElementById('copySsid').addEventListener('click', async ()=>{
+  await copyToClipboard(WIFI.ssid);
+  alert('SSID copiado.');
+});
+document.getElementById('copyPass').addEventListener('click', async ()=>{
+  await copyToClipboard(WIFI.pass);
+  alert('Senha copiada.');
+});
+document.getElementById('wifiOpenAndroid').addEventListener('click', async ()=>{
+  await copyToClipboard(WIFI.pass); // copia antes de abrir
+  const intent = 'intent:#Intent;action=android.settings.WIFI_SETTINGS;end';
+  let warned = false;
+  const tip = setTimeout(()=>{ if(!warned){ warned=true; alert('A senha já foi copiada. Abra o Wi-Fi do aparelho e cole.'); } }, 1200);
+  try { window.location.href = intent; } catch(e){ clearTimeout(tip); alert('A senha já foi copiada. Abra o Wi-Fi do aparelho e cole.'); }
+});
+
+/* ====== PIX ====== */
+const pixModal = document.getElementById('pixModal');
+document.getElementById('btnPix').addEventListener('click', async ()=>{
+  await copyToClipboard(PIX_KEY);
+  document.getElementById('pixCopiedMsg').classList.add('show');
+  openModal(pixModal);
+});
+document.getElementById('closePix').addEventListener('click', ()=> closeModal(pixModal));
+pixModal.addEventListener('click', (e)=>{ if(e.target.id==='pixModal') closeModal(pixModal); });
 </script>
 </body>
 </html>
