@@ -10,166 +10,140 @@
 <style>
 :root{
   --text:#fff;
-  --muted:#d9d9d9;
+  --muted:#d8d8d8;
 
-  /* Ouro brilhante */
-  --gold-1:#f6e7b2;
-  --gold-2:#e7c97f;
-  --gold-3:#c89a52;
-  --gold-4:#8e6a2f;
+  /* Ouro (fundo e borda) */
+  --gold-1:#f6e7b2;   /* topo (claro) */
+  --gold-2:#e7c97f;   /* meio */
+  --gold-3:#c89a52;   /* meio/baixo */
+  --gold-4:#8e6a2f;   /* base (escuro) */
+
+  /* Cor do texto “TRADIÇÃO…” e do rodapé */
+  --tagline:#e3c676;
 
   /* Metal escuro */
   --steel-top:#3a3a3a;
   --steel-mid:#2c2c2c;
   --steel-bot:#1a1a1a;
 
-  --ring:rgba(255,255,255,.14);
   --glow:0 10px 26px rgba(255,214,120,.35);
 }
 
-/* ====== BASE / FUNDO ====== */
+/* ====== FUNDO ====== */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-  margin:0;
-  color:var(--text);
+  margin:0; color:var(--text);
   font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  position:relative;               /* cria contexto pros pseudo-elementos */
-  overflow-x:hidden;
+  position:relative; overflow-x:hidden;
 }
-
-/* Camada da imagem de fundo */
 body::before{
-  content:"";
-  position:fixed; inset:0;
-  background:
-    url('background-dom-sarmento.jpg') center/cover no-repeat,
-    #0b0b0b;
+  content:""; position:fixed; inset:0;
+  background:url('background-dom-sarmento.jpg') center/cover no-repeat, #0b0b0b;
   z-index:0;
 }
-
-/* Overlay escuro (legibilidade) */
 body::after{
-  content:"";
-  position:fixed; inset:0;
-  background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.65) 50%, rgba(0,0,0,.75));
+  content:""; position:fixed; inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.65) 50%, rgba(0,0,0,.78));
   z-index:0;
 }
 
-/* Conteúdo acima do fundo/overlay */
-.page{
-  position:relative; z-index:1;
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 24px 18px 36px;
-}
+.page{ position:relative; z-index:1; max-width:440px; margin:0 auto; padding:24px 18px 40px; }
 
 /* ====== CABEÇALHO ====== */
-.header{ text-align:center; margin: 8px 0 10px; }
+.header{ text-align:center; margin:6px 0 10px; }
 .logo{
-  width: 200px; max-width: 80vw; display:block; margin: 0 auto 8px;
-  /* “Embute” a logo no fundo – funciona melhor em PNG com fundo claro */
-  mix-blend-mode: screen;               /* tenta remover escuro atrás */
-  filter: drop-shadow(0 2px 0 rgba(255,255,255,.18))
-          drop-shadow(0 10px 18px rgba(0,0,0,.35));
+  width:200px; max-width:80vw; display:block; margin:0 auto 8px;
+  /* embute a logo no fundo; com PNG transparente fica perfeito */
+  mix-blend-mode:screen;
+  filter: drop-shadow(0 2px 0 rgba(255,255,255,.18)) drop-shadow(0 10px 18px rgba(0,0,0,.35));
 }
 .tagline{
-  font-weight:800;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  color:#e3c676;
-  font-size: clamp(15px, 3.5vw, 22px);
+  color:var(--tagline);
+  font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+  font-size:clamp(15px,3.5vw,22px);
 }
 
 /* ====== LISTA DE BOTÕES ====== */
-.stack{ display:flex; flex-direction:column; gap:16px; margin: 18px 0 36px; }
+.stack{ display:flex; flex-direction:column; gap:18px; margin:18px 0 36px; }
 
-/* Botão base (layout) */
+/* Base do card (conteúdo) */
 .btn{
-  position:relative;
+  position:relative; overflow:hidden;
   display:flex; align-items:center; gap:16px;
-  padding: 18px 18px;
-  border-radius: 22px;
+  padding:18px; min-height:90px;
+  border-radius:22px;
   text-decoration:none; color:var(--text);
-  min-height: 88px;
-  border:1px solid rgba(255,255,255,.06);
-  overflow:hidden;
 }
-.btn::after{
-  /* borda iluminada sutil */
-  content:""; position:absolute; inset:-1px; border-radius:24px;
-  box-shadow: 0 0 0 2px rgba(255,255,255,.04), inset 0 0 0 1px rgba(0,0,0,.5);
-  pointer-events:none;
-}
-.left{ display:flex; align-items:center; gap:16px; min-width:0; flex:1; }
-.icon{
-  width:42px; height:42px; flex:0 0 42px;
-  display:grid; place-items:center;
-  border-radius:12px;
-  background: rgba(0,0,0,.25);
-  outline:1px solid rgba(255,255,255,.08);
-}
-.title{
-  font-weight:800; line-height:1.1; letter-spacing:.01em;
-  text-transform:uppercase; font-size: clamp(16px, 3.5vw, 20px);
-}
-.sub{ font-size:13.5px; color:var(--muted); margin-top:4px; }
 
-/* Ouro brilhante */
-.btn-gold{
-  background: linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 45%, var(--gold-3) 70%, var(--gold-4) 100%);
+/* Borda dourada em degradê (igual ao exemplo) */
+.btn::before{
+  /* camada da borda */
+  content:""; position:absolute; inset:0;
+  border-radius:24px; padding:2px;        /* espessura da borda */
+  background:
+    linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 40%, var(--gold-3) 75%, var(--gold-4) 100%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box, 
+    linear-gradient(#000 0 0); 
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events:none;
+  box-shadow:0 4px 16px rgba(0,0,0,.45), 0 0 18px rgba(255,214,120,.13);
+}
+
+/* Fundo dos cards */
+.btn--gold{
+  background:linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 45%, var(--gold-3) 70%, var(--gold-4) 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.28), var(--glow);
 }
-.btn-gold .icon{ background: rgba(0,0,0,.12); color:#111; }
-.btn-gold .title{ color:#111; }
-.btn-gold .sub{ color:#1e1e1e; opacity:.8; }
-
-/* Metal escuro */
-.btn-dark{
-  background: linear-gradient(180deg, var(--steel-top) 0%, var(--steel-mid) 50%, var(--steel-bot) 100%);
+.btn--dark{
+  background:linear-gradient(180deg, var(--steel-top) 0%, var(--steel-mid) 50%, var(--steel-bot) 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 10px 26px rgba(0,0,0,.35);
 }
 
-/* Chip à direita (PIX) */
+.left{ display:flex; align-items:center; gap:16px; min-width:0; flex:1; }
+.icon{
+  width:44px; height:44px; flex:0 0 44px;
+  display:grid; place-items:center;
+  border-radius:12px; background:rgba(0,0,0,.22);
+  outline:1px solid rgba(255,255,255,.08);
+}
+.title{ font-weight:800; text-transform:uppercase; letter-spacing:.01em; line-height:1.1; font-size:clamp(16px,3.5vw,20px); }
+.sub{ font-size:13.5px; color:var(--muted); margin-top:4px; }
+.btn--gold .title{ color:#121212; }   /* texto escuro no ouro */
+.btn--gold .sub{ color:#1f1f1f; opacity:.82; }
+
+/* Botão/chip de PIX à direita */
 .chip{
-  flex:0 0 auto;
-  padding: 12px 16px;
-  border-radius: 14px;
-  font-weight: 800;
-  font-size: 14px;
-  background:#69dfd6;
-  color:#083033;
+  flex:0 0 auto; border:0; cursor:pointer;
+  padding:12px 16px; border-radius:16px;
+  background:#69dfd6; color:#083033; font-weight:800; font-size:14px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
-  cursor:pointer;
-  border:0;
 }
 
 /* ====== RODAPÉ ====== */
-.footer{ color:#cfcfcf; font-size:14px; letter-spacing:.02em; text-align:center; }
-.gallery{
-  display:grid; grid-auto-flow:column; grid-auto-columns: minmax(100px, 1fr);
-  gap:8px; overflow-x:auto; margin-top:12px; padding-bottom:8px;
-}
+.footer{ text-align:center; margin-top:4px; }
+.footer .slogan{ color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
+.gallery{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(100px,1fr); gap:8px; overflow-x:auto; margin-top:12px; padding-bottom:8px; }
 .gallery img{ width:100%; height:100px; object-fit:cover; border-radius:8px; }
 
-/* ====== MOBILE AJUSTES ====== */
 @media (min-width:480px){
-  .page{ padding: 28px 24px 44px; }
-  .logo{ width: 220px; }
-  .btn{ min-height: 92px; }
+  .page{ padding:28px 24px 44px; }
+  .logo{ width:220px; }
+  .btn{ min-height:96px; }
 }
 </style>
 </head>
 <body>
   <main class="page">
     <header class="header">
-      <img src="logo-dom-sarmento.png" alt="Dom Sarmento" class="logo">
+      <img class="logo" src="logo-dom-sarmento.png" alt="Dom Sarmento">
       <div class="tagline">TRADIÇÃO E ESTILO EM CADA CORTE</div>
     </header>
 
     <section class="stack">
-      <!-- Agendar (OURO) -->
-      <a class="btn btn-gold" href="URL_AGENDAMENTO" target="_blank" rel="noopener">
+      <!-- Ouro -->
+      <a class="btn btn--gold" href="URL_AGENDAMENTO" target="_blank" rel="noopener">
         <div class="left">
           <div class="icon"><i class="fa-solid fa-calendar-days" style="font-size:22px;"></i></div>
           <div>
@@ -179,10 +153,10 @@ body::after{
         </div>
       </a>
 
-      <!-- WhatsApp (METAL) -->
-      <a class="btn btn-dark" href="https://wa.me/SEU_NUMERO_WHATSAPP" target="_blank" rel="noopener">
+      <!-- Dark com borda dourada -->
+      <a class="btn btn--dark" href="https://wa.me/SEU_NUMERO_WHATSAPP" target="_blank" rel="noopener">
         <div class="left">
-          <div class="icon"><i class="fa-brands fa-whatsapp" style="font-size:22px; color:#25D366"></i></div>
+          <div class="icon"><i class="fa-brands fa-whatsapp" style="font-size:22px;color:#25D366"></i></div>
           <div>
             <div class="title">WhatsApp</div>
             <div class="sub">Fale direto com recepção</div>
@@ -190,10 +164,9 @@ body::after{
         </div>
       </a>
 
-      <!-- Avaliações (METAL) -->
-      <a class="btn btn-dark" href="URL_AVALIACOES_GOOGLE" target="_blank" rel="noopener">
+      <a class="btn btn--dark" href="URL_AVALIACOES_GOOGLE" target="_blank" rel="noopener">
         <div class="left">
-          <div class="icon"><i class="fa-solid fa-star" style="font-size:22px; color:#FFD54F"></i></div>
+          <div class="icon"><i class="fa-solid fa-star" style="font-size:22px;color:#FFD54F"></i></div>
           <div>
             <div class="title">Avaliações no Google</div>
             <div class="sub">Conte como foi sua experiência</div>
@@ -201,10 +174,9 @@ body::after{
         </div>
       </a>
 
-      <!-- Instagram (METAL) -->
-      <a class="btn btn-dark" href="https://www.instagram.com/domsarmento" target="_blank" rel="noopener">
+      <a class="btn btn--dark" href="https://www.instagram.com/domsarmento" target="_blank" rel="noopener">
         <div class="left">
-          <div class="icon"><i class="fa-brands fa-instagram" style="font-size:22px; color:#E1306C"></i></div>
+          <div class="icon"><i class="fa-brands fa-instagram" style="font-size:22px;color:#E1306C"></i></div>
           <div>
             <div class="title">Instagram oficial</div>
             <div class="sub">@domsarmento</div>
@@ -212,10 +184,9 @@ body::after{
         </div>
       </a>
 
-      <!-- PIX (METAL + CHIP à direita) -->
-      <div class="btn btn-dark">
+      <div class="btn btn--dark">
         <div class="left">
-          <div class="icon"><i class="fa-solid fa-money-bill-wave" style="font-size:20px; color:#69dfd6"></i></div>
+          <div class="icon"><i class="fa-solid fa-money-bill-wave" style="font-size:20px;color:#69dfd6"></i></div>
           <div>
             <div class="title">Pagamento via Pix</div>
             <div class="sub">@domsarmento</div>
@@ -228,14 +199,14 @@ body::after{
     </section>
 
     <section class="footer">
-      <div>MAIS QUE CORTES, UMA EXPERIÊNCIA DOM SARMENTO</div>
+      <div class="slogan">MAIS QUE CORTES, UMA EXPERIÊNCIA DOM SARMENTO</div>
       <div class="gallery">
-        <img src="corte1.jpg" alt="Corte 1">
-        <img src="corte2.jpg" alt="Corte 2">
-        <img src="corte3.jpg" alt="Corte 3">
-        <img src="corte4.jpg" alt="Corte 4">
-        <img src="corte5.jpg" alt="Corte 5">
-        <img src="corte6.jpg" alt="Corte 6">
+        <img src="corte1.jpg" alt="">
+        <img src="corte2.jpg" alt="">
+        <img src="corte3.jpg" alt="">
+        <img src="corte4.jpg" alt="">
+        <img src="corte5.jpg" alt="">
+        <img src="corte6.jpg" alt="">
       </div>
     </section>
   </main>
