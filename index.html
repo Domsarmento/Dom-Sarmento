@@ -181,7 +181,7 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
   <!-- AÇÕES -->
   <section class="stack">
     <!-- Agendar -->
-    <a class="btn btn--gold" href="https://sistema.appbarber.com.br/login.php" target="_blank" rel="noopener">
+    <a class="btn btn--gold" href="URL_AGENDAMENTO" target="_blank" rel="noopener">
       <img class="icon" src="media/media:calendar.png" alt="Calendário">
       <div>
         <div class="title">Agendar horário</div>
@@ -193,7 +193,7 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
     <button class="btn btn--dark" id="btnWifi" type="button">
       <img class="icon" src="media/media:wifi.png" alt="Wi-Fi">
       <div>
-        <div class="title">Conectar Wi-Fi</div>
+        <div class="title">Conectar ao Wi-Fi</div>
         <div class="sub">Internet liberada para clientes</div>
       </div>
     </button>
@@ -277,11 +277,11 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 <div class="modal" id="wifiModal" aria-hidden="true">
   <div class="mcard" role="dialog" aria-modal="true" aria-labelledby="wTitle">
     <div class="mtop">
-      <h3 id="wTitle">Conectar Wi-Fi</h3>
+      <h3 id="wTitle">Conectar ao Wi-Fi</h3>
       <button class="mclose" id="wClose" type="button">✕</button>
     </div>
     <div class="qrwrap"><div id="qr"></div></div>
-    <div class="wifi-meta">Rede: <span id="ssidOut">LukannaEstamparia_5G</span></div>
+    <div class="wifi-meta">Rede: <span id="ssidOut">Dom_Sarmento</span></div>
     <div class="mbtns">
       <button class="btn-mini btn-cyan" id="copySsid">Copiar SSID</button>
       <button class="btn-mini btn-purple" id="copyPass">Copiar senha</button>
@@ -338,7 +338,7 @@ document.getElementById('btnPix').addEventListener('click', async ()=>{
 })();
 
 /* ===== Modal Wi-Fi ===== */
-const WIFI = { ssid:'LukannaEstamparia_5G', pass:'estampariadigital.', type:'WPA' }; // edite aqui
+const WIFI = { ssid:'Dom_Sarmento', pass:'estampariadigital.', type:'WPA' }; // edite aqui
 document.getElementById('ssidOut').textContent = WIFI.ssid;
 
 const modal = document.getElementById('wifiModal');
