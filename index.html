@@ -10,8 +10,9 @@
   --text:#ffffff; --muted:#e8e8e8;
   --gold-1:#f9eebe; --gold-2:#e9c97f; --gold-3:#cfa156; --gold-4:#8c652f;
   --steel-top:#3b3b3b; --steel-mid:#262626; --steel-bot:#141414;
-  --tagline:#e3c676;
+  --tagline:#e3c676; --ring:rgba(255,255,255,.08);
 }
+
 /* ===== Base & BG ===== */
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -34,8 +35,8 @@ body::after{
 .header{text-align:center; margin:6px 0 12px}
 .logo{
   width:240px; max-width:80vw; display:block; margin:0 auto 8px;
-  mix-blend-mode:multiply; /* remove a “caixa” do logo */
-  filter:contrast(1.06) drop-shadow(0 12px 22px rgba(0,0,0,.40));
+  /* PNG transparente: não precisa blend; deixo só o drop shadow suave */
+  filter:drop-shadow(0 12px 22px rgba(0,0,0,.40));
 }
 .tagline{
   color:#e3c676; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
@@ -65,12 +66,10 @@ body::after{
   box-shadow: inset 0 1px 0 rgba(255,255,255,.38), 0 18px 36px rgba(255,214,120,.28);
 }
 .btn--gold::after{
-  /* faixa de brilho “gloss” no meio */
   content:""; position:absolute; left:10px; right:10px; top:28%;
   height:22%; border-radius:18px;
   background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0));
-  filter:blur(1px);
-  pointer-events:none;
+  filter:blur(1px); pointer-events:none;
 }
 /* Fundo metal escuro suave */
 .btn--dark{
@@ -103,11 +102,21 @@ body::after{
   box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
 }
 
-/* Vídeo + Slogan */
+/* ====== VÍDEO (estilo Lukanna) ====== */
+.section{ margin:20px auto 10px }
+.block{
+  margin:8px 0 18px;
+  padding:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border-radius:18px;
+  box-shadow:inset 0 0 0 1px var(--ring), 0 8px 40px rgba(0,0,0,.45);
+}
+.video-shell{ border-radius:18px; overflow:hidden; background:#000; }
+video{ width:100%; height:auto; aspect-ratio:9 / 16; display:block }
+
+/* Slogan */
 .footer{text-align:center; margin-top:14px}
 .footer .slogan{ color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase }
-.video-wrap{ margin-top:16px; border-radius:12px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.35) }
-.video-wrap video{ width:100%; height:auto; display:block }
 
 @media (min-width:480px){
   .page{padding:30px 24px 48px}
@@ -126,7 +135,7 @@ body::after{
     <section class="stack">
       <!-- 1. Agendar (ouro) -->
       <a class="btn btn--gold" href="URL_AGENDAMENTO" target="_blank" rel="noopener">
-        <img class="icon" src="media/media:calendar.jpg" alt="Calendário">
+        <img class="icon" src="media/media:calendar.png" alt="Calendário">
         <div>
           <div class="title">Agendar horário</div>
           <div class="sub">Reserve seu corte via Apberber</div>
@@ -135,7 +144,7 @@ body::after{
 
       <!-- 2. Conectar Wi-Fi -->
       <a class="btn btn--dark" href="URL_WIFI" target="_blank" rel="noopener">
-        <img class="icon" src="media/media:wifi.jpg" alt="Wi-Fi">
+        <img class="icon" src="media/media:wifi.png" alt="Wi-Fi">
         <div>
           <div class="title">Conectar ao Wi-Fi</div>
           <div class="sub">Internet liberada para clientes</div>
@@ -144,7 +153,7 @@ body::after{
 
       <!-- 3. Avaliações -->
       <a class="btn btn--dark" href="URL_AVALIACOES_GOOGLE" target="_blank" rel="noopener">
-        <img class="icon" src="media/media:star.jpg" alt="Avaliações no Google">
+        <img class="icon" src="media/media:star.png" alt="Avaliações no Google">
         <div>
           <div class="title">Avaliações no Google</div>
           <div class="sub">Conte como foi sua experiência</div>
@@ -153,7 +162,7 @@ body::after{
 
       <!-- 4. Instagram -->
       <a class="btn btn--dark" href="https://www.instagram.com/domsarmento" target="_blank" rel="noopener">
-        <img class="icon" src="media/media:instagram.jpg" alt="Instagram">
+        <img class="icon" src="media/media:instagram.png" alt="Instagram">
         <div>
           <div class="title">Instagram oficial</div>
           <div class="sub">@domsarmento</div>
@@ -171,7 +180,7 @@ body::after{
 
       <!-- 6. Pix -->
       <div class="btn btn--dark">
-        <img class="icon" src="media/media:pix.jpg" alt="Pix">
+        <img class="icon" src="media/media:pix.png" alt="Pix">
         <div style="flex:1">
           <div class="title">Pagamento via Pix</div>
           <div class="sub">@domsarmento</div>
@@ -186,8 +195,12 @@ body::after{
       <div class="slogan">MAIS QUE CORTES, UMA EXPERIÊNCIA DOM SARMENTO 💈</div>
     </section>
 
-    <section class="video-wrap">
-      <video src="media/intro.mp4" autoplay muted loop playsinline></video>
+    <!-- VÍDEO — formato Lukanna -->
+    <section class="section block">
+      <div class="video-shell">
+        <!-- autoplay mobile exige muted + playsinline -->
+        <video src="media/intro.mp4" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
     </section>
   </main>
 </body>
