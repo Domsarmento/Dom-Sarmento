@@ -41,7 +41,7 @@ body::after{
 .tagline{
   color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase;
   font-size:clamp(18px,4vw,24px);
-  margin:14px auto 16px; /* fica exatamente entre a logo e o 1º botão */
+  margin:14px auto 16px;
 }
 
 /* ===== Cards ===== */
@@ -50,7 +50,6 @@ body::after{
   position:relative; overflow:hidden; display:flex; align-items:center; gap:16px;
   padding:20px; min-height:104px; border-radius:28px; text-decoration:none; color:var(--text);
 }
-/* Borda dourada brilhosa em todos */
 .btn::before{
   content:""; position:absolute; inset:0; border-radius:30px; padding:2px;
   background:linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 40%, var(--gold-3) 75%, var(--gold-4) 100%);
@@ -59,7 +58,6 @@ body::after{
   box-shadow:0 0 22px rgba(255,215,130,.22), 0 14px 30px rgba(0,0,0,.45);
   pointer-events:none;
 }
-/* Fundo ouro com gloss forte */
 .btn--gold{
   background:
     radial-gradient(160% 220% at 0% -40%, rgba(255,255,255,.70), transparent 45%),
@@ -72,22 +70,17 @@ body::after{
   background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0));
   filter:blur(1px); pointer-events:none;
 }
-/* Fundo metal escuro suave */
 .btn--dark{
   background:
     linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0) 24%) top/100% 50% no-repeat,
     linear-gradient(0deg, rgba(255,255,255,.05), rgba(255,255,255,0) 28%) bottom/100% 55% no-repeat,
     linear-gradient(180deg, var(--steel-top) 0%, var(--steel-mid) 55%, var(--steel-bot) 100%);
 }
-
-/* ÍCONES SOLTOS (sem caixa) — maiores */
 .icon{
   width:56px; height:56px; object-fit:contain; flex:0 0 56px; display:block;
   filter: drop-shadow(0 2px 0 rgba(0,0,0,.15)) drop-shadow(0 6px 10px rgba(0,0,0,.35));
 }
 .btn--gold .icon{ filter: drop-shadow(0 2px 0 rgba(0,0,0,.10)) drop-shadow(0 6px 10px rgba(0,0,0,.28)); }
-
-/* Texto dos cards — tamanhos confortáveis */
 .title{
   font-weight:800; text-transform:uppercase; letter-spacing:.01em; line-height:1.12;
   font-size:clamp(20px,4.4vw,24px);
@@ -95,15 +88,13 @@ body::after{
 .sub{ font-size:clamp(14px,3.6vw,16px); color:var(--muted); margin-top:6px }
 .btn--gold .title{ color:#121212 }
 .btn--gold .sub{ color:#1f1f1f; opacity:.86 }
-
-/* Chip Pix */
 .chip{
   flex:0 0 auto; border:0; cursor:pointer; padding:14px 16px; border-radius:18px;
   background:#69dfd6; color:#083033; font-weight:800; font-size:15px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
 }
 
-/* ====== VÍDEO — estilo "Lukanna" (com controls) ====== */
+/* ===== VÍDEO ===== */
 .section{ margin:22px auto 12px }
 .block{
   margin:8px 0 18px;
@@ -113,18 +104,39 @@ body::after{
   box-shadow:inset 0 0 0 1px var(--ring), 0 8px 40px rgba(0,0,0,.45);
 }
 .video-shell{ border-radius:18px; overflow:hidden; background:#000; }
-video{
-  width:100%; height:auto; aspect-ratio:9/16; display:block;
-}
+video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 
-/* Slogan */
+/* ===== Slogan ===== */
 .footer{text-align:center; margin-top:8px}
 .footer .slogan{ color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase }
 
-@media (min-width:520px){
-  .page{padding:32px 24px 52px}
-  .btn{min-height:110px}
+/* ===== CARROSSEL / GALERIA ===== */
+.gallery-title{
+  margin:0 0 12px; font-weight:800;
+  font-size:clamp(18px,4vw,22px); letter-spacing:.02em;
 }
+.carousel{ position:relative }
+.car-viewport{
+  overflow:hidden; border-radius:18px; background:#000;
+  box-shadow:inset 0 0 0 1px var(--ring), 0 8px 40px rgba(0,0,0,.45);
+}
+.car-track{ display:flex; transition:transform .45s ease; will-change:transform }
+.car-slide{ flex:0 0 100% }
+.car-slide img{
+  width:100%; height:auto; display:block; aspect-ratio:9/16; object-fit:cover;
+}
+.car-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:40px; height:40px; border-radius:10px; border:1px solid rgba(255,255,255,.4);
+  background:rgba(0,0,0,.35); color:#fff; font-size:22px; line-height:38px; text-align:center;
+  cursor:pointer; user-select:none; backdrop-filter:blur(4px);
+}
+.car-arrow:hover{ background:rgba(0,0,0,.55) }
+.car-arrow:active{ transform:translateY(-50%) scale(.98) }
+.car-arrow.prev{ left:8px } .car-arrow.next{ right:8px }
+
+/* pausar no hover em desktop */
+.carousel:hover{ --pause:1 }
 </style>
 </head>
 <body>
@@ -135,7 +147,6 @@ video{
     </header>
 
     <section class="stack">
-      <!-- 1. Agendar (ouro) -->
       <a class="btn btn--gold" href="URL_AGENDAMENTO" target="_blank" rel="noopener">
         <img class="icon" src="media/media:calendar.png" alt="Calendário">
         <div>
@@ -144,7 +155,6 @@ video{
         </div>
       </a>
 
-      <!-- 2. Conectar Wi-Fi -->
       <a class="btn btn--dark" href="URL_WIFI" target="_blank" rel="noopener">
         <img class="icon" src="media/media:wifi.png" alt="Wi-Fi">
         <div>
@@ -153,7 +163,6 @@ video{
         </div>
       </a>
 
-      <!-- 3. Avaliações -->
       <a class="btn btn--dark" href="URL_AVALIACOES_GOOGLE" target="_blank" rel="noopener">
         <img class="icon" src="media/media:star.png" alt="Avaliações no Google">
         <div>
@@ -162,7 +171,6 @@ video{
         </div>
       </a>
 
-      <!-- 4. Instagram -->
       <a class="btn btn--dark" href="https://www.instagram.com/domsarmento" target="_blank" rel="noopener">
         <img class="icon" src="media/media:instagram.png" alt="Instagram">
         <div>
@@ -171,7 +179,6 @@ video{
         </div>
       </a>
 
-      <!-- 5. WhatsApp -->
       <a class="btn btn--dark" href="https://wa.me/SEU_NUMERO_WHATSAPP" target="_blank" rel="noopener">
         <img class="icon" src="media/media:whatsapp.png" alt="WhatsApp">
         <div>
@@ -180,7 +187,6 @@ video{
         </div>
       </a>
 
-      <!-- 6. Pix -->
       <div class="btn btn--dark">
         <img class="icon" src="media/media:pix.png" alt="Pix">
         <div style="flex:1">
@@ -197,7 +203,7 @@ video{
       <div class="slogan">MAIS QUE CORTES, UMA EXPERIÊNCIA DOM SARMENTO 💈</div>
     </section>
 
-    <!-- VÍDEO — com controls, autoplay, muted, loop e playsinline -->
+    <!-- VÍDEO -->
     <section class="section block">
       <div class="video-shell">
         <video id="videoBarbearia"
@@ -212,10 +218,27 @@ video{
         </video>
       </div>
     </section>
+
+    <!-- GALERIA -->
+    <section class="section">
+      <div class="gallery-title">Galeria</div>
+      <div class="carousel" id="galeria">
+        <button class="car-arrow prev" aria-label="Anterior">‹</button>
+        <div class="car-viewport">
+          <div class="car-track">
+            <div class="car-slide"><img src="media/galeria1.jpg" alt="Galeria 1"></div>
+            <div class="car-slide"><img src="media/galeria2.jpg" alt="Galeria 2"></div>
+            <div class="car-slide"><img src="media/galeria3.jpg" alt="Galeria 3"></div>
+            <div class="car-slide"><img src="media/galeria4.jpg" alt="Galeria 4"></div>
+          </div>
+        </div>
+        <button class="car-arrow next" aria-label="Próximo">›</button>
+      </div>
+    </section>
   </main>
 
 <script>
-/* Garantir autoplay quando possível em mobile */
+/* Autoplay confiável no mobile (vídeo) */
 (function () {
   const v = document.getElementById('videoBarbearia');
   if (!v) return;
@@ -225,6 +248,52 @@ video{
     document.addEventListener('visibilitychange', tryPlay, {passive:true});
     window.addEventListener('touchstart', tryPlay, {once:true, passive:true});
   }
+})();
+
+/* ===== Carrossel simples com autoplay + setas + swipe ===== */
+(function initCarousel(rootId, intervalMs=4000){
+  const root   = document.getElementById(rootId || 'galeria');
+  if(!root) return;
+  const track  = root.querySelector('.car-track');
+  const slides = Array.from(root.querySelectorAll('.car-slide'));
+  const prev   = root.querySelector('.prev');
+  const next   = root.querySelector('.next');
+  let index = 0, timer, paused = false;
+
+  function go(i){
+    index = (i + slides.length) % slides.length;
+    track.style.transform = `translateX(${-index*100}%)`;
+  }
+  function start(){
+    stop();
+    timer = setInterval(()=>{ if(!paused) go(index+1); }, intervalMs);
+  }
+  function stop(){ if(timer) clearInterval(timer); }
+
+  prev.addEventListener('click', ()=>{ go(index-1); start(); });
+  next.addEventListener('click', ()=>{ go(index+1); start(); });
+
+  // pausa no hover/press
+  root.addEventListener('mouseenter', ()=> paused = true);
+  root.addEventListener('mouseleave', ()=> paused = false);
+  root.addEventListener('touchstart', ()=> paused = true, {passive:true});
+  root.addEventListener('touchend', ()=> paused = false);
+
+  // swipe
+  let sx=0, dx=0;
+  root.addEventListener('touchstart', e=>{ sx = e.touches[0].clientX; }, {passive:true});
+  root.addEventListener('touchmove',  e=>{ dx = e.touches[0].clientX - sx; }, {passive:true});
+  root.addEventListener('touchend',   ()=>{
+    if(Math.abs(dx) > 40){ dx<0 ? go(index+1) : go(index-1); start(); }
+    sx=dx=0;
+  });
+
+  // visibilidade
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.visibilityState === 'hidden') stop(); else start();
+  });
+
+  go(0); start();
 })();
 </script>
 </body>
