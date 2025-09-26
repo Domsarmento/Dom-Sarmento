@@ -12,10 +12,10 @@
   --muted:#e2e2e2;
 
   /* Ouro (fundo e borda) */
-  --gold-1:#f7e9b8;   /* topo claro */
-  --gold-2:#e7c97f;   /* meio claro */
-  --gold-3:#cfa156;   /* meio */
-  --gold-4:#8c652f;   /* base escuro */
+  --gold-1:#f7e9b8;
+  --gold-2:#e7c97f;
+  --gold-3:#cfa156;
+  --gold-4:#8c652f;
 
   /* Cor dos títulos “TRADIÇÃO…” e slogan final */
   --tagline:#e3c676;
@@ -26,7 +26,7 @@
   --steel-bot:#151515;
 }
 
-/* ===== Fundo da página ===== */
+/* ===== Fundo ===== */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
@@ -34,14 +34,11 @@ body{
   font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   position:relative; overflow-x:hidden;
 }
-
-/* imagem de fundo */
 body::before{
   content:""; position:fixed; inset:0;
   background: url('background-dom-sarmento.jpg') center/cover no-repeat, #0b0b0b;
   z-index:0;
 }
-/* overlay escuro para legibilidade */
 body::after{
   content:""; position:fixed; inset:0;
   background:linear-gradient(180deg, rgba(0,0,0,.40), rgba(0,0,0,.65) 50%, rgba(0,0,0,.80));
@@ -53,32 +50,23 @@ body::after{
 /* ===== Cabeçalho ===== */
 .header{ text-align:center; margin:6px 0 12px; }
 
-/* LOGO — “remover fundo” por blend:
-   - se o fundo da sua logo for escuro/preto, 'screen' faz “sumir”
-   - se for claro/branco, troque para 'multiply'
-   - com PNG transparente real, continua tudo ok
-*/
+/* LOGO — remover fundo por blend (melhor ainda com PNG transparente) */
 .logo{
   width:230px; max-width:80vw; display:block; margin:0 auto 8px;
-  mix-blend-mode: screen;              /* tente 'multiply' se o fundo da logo for MUITO claro */
+  mix-blend-mode:screen;                 /* se a base da logo for clara, troque para 'multiply' */
   filter: brightness(1.08) contrast(1.12)
           drop-shadow(0 2px 0 rgba(255,255,255,.16))
           drop-shadow(0 10px 18px rgba(0,0,0,.35));
-  /* remove qualquer “caixa” muito dura da borda da imagem */
-  -webkit-mask-image: radial-gradient(120% 120% at 50% 50%, #000 70%, transparent 100%);
-          mask-image: radial-gradient(120% 120% at 50% 50%, #000 70%, transparent 100%);
 }
-
 .tagline{
   color:var(--tagline);
   font-weight:800; letter-spacing:.06em; text-transform:uppercase;
   font-size:clamp(16px,3.6vw,22px);
 }
 
-/* ===== Lista de botões ===== */
+/* ===== Botões ===== */
 .stack{ display:flex; flex-direction:column; gap:18px; margin:18px 0 36px; }
 
-/* Card base */
 .btn{
   position:relative; overflow:hidden;
   display:flex; align-items:center; gap:16px;
@@ -86,27 +74,21 @@ body::after{
   border-radius:26px;
   text-decoration:none; color:var(--text);
 }
-
-/* Borda dourada em degradê (todos os botões) */
 .btn::before{
   content:""; position:absolute; inset:0;
-  border-radius:28px; padding:2px;                /* espessura da borda */
+  border-radius:28px; padding:2px;
   background:linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 40%, var(--gold-3) 75%, var(--gold-4) 100%);
   -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite:xor; mask-composite:exclude;
   pointer-events:none;
   box-shadow:0 10px 18px rgba(0,0,0,.45), 0 0 18px rgba(255,214,120,.14);
 }
-
-/* Fundo ouro com highlight */
 .btn--gold{
   background:
     radial-gradient(120% 200% at 10% -40%, rgba(255,255,255,.55), transparent 42%),
     linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 45%, var(--gold-3) 70%, var(--gold-4) 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 14px 28px rgba(255,214,120,.25);
 }
-
-/* Fundo metal escuro SUAVE (sem listras) */
 .btn--dark{
   background:
     linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0) 22%) top/100% 50% no-repeat,
@@ -114,30 +96,26 @@ body::after{
     linear-gradient(180deg, var(--steel-top) 0%, var(--steel-mid) 55%, var(--steel-bot) 100%);
 }
 
-/* Conteúdo do card */
 .left{ display:flex; align-items:center; gap:16px; min-width:0; flex:1; }
 
-/* “almofada” do ícone com leve brilho (igual ao mock) */
+/* Almofada do ícone */
 .icon-pad{
   width:64px; height:64px; flex:0 0 64px;
   display:grid; place-items:center;
   border-radius:18px;
-  background: rgba(0,0,0,.22);              /* sutil fundo */
-  outline:1px solid rgba(255,255,255,.08);  /* aro fino */
+  background: rgba(0,0,0,.22);
+  outline:1px solid rgba(255,255,255,.08);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
 }
 .btn--gold .icon-pad{ background: rgba(0,0,0,.12); }
-
-.icon-pad img, .icon-pad svg{
-  width:40px; height:40px; display:block; object-fit:contain;
-}
+.icon-pad svg, .icon-pad img{ width:40px; height:40px; display:block; }
 
 .title{ font-weight:800; text-transform:uppercase; letter-spacing:.01em; line-height:1.1; font-size:clamp(18px,3.8vw,22px); }
 .sub{ font-size:14px; color:var(--muted); margin-top:6px; }
-.btn--gold .title{ color:#121212; }   /* texto escuro no ouro */
+.btn--gold .title{ color:#121212; }
 .btn--gold .sub{ color:#1f1f1f; opacity:.85; }
 
-/* Botão/chip PIX à direita */
+/* Chip PIX */
 .chip{
   flex:0 0 auto; border:0; cursor:pointer;
   padding:14px 16px; border-radius:18px;
@@ -145,24 +123,31 @@ body::after{
   box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
 }
 
+/* ===== Vídeo (no lugar da galeria) ===== */
+.video-wrap{
+  margin-top:8px;
+  border-radius:12px; overflow:hidden;
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
+}
+.video-wrap video{ width:100%; height:auto; display:block; }
+
 /* Rodapé */
-.footer{ text-align:center; margin-top:6px; }
+.footer{ text-align:center; margin-top:14px; }
 .footer .slogan{ color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
-.gallery{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(100px,1fr); gap:8px; overflow-x:auto; margin-top:12px; padding-bottom:8px; }
-.gallery img{ width:100%; height:100px; object-fit:cover; border-radius:8px; }
 
 @media (min-width:480px){
   .page{ padding:30px 24px 48px; }
   .logo{ width:240px; }
   .btn{ min-height:100px; }
 }
+svg{display:block}
 </style>
 </head>
 <body>
   <main class="page">
     <header class="header">
-      <!-- Se conseguir o PNG com fundo transparente, mantenha este mesmo src -->
-      <img class="logo" src="logo-dom-sarmento.png" alt="Dom Sarmento">
+      <!-- usa o nome real do seu arquivo -->
+      <img class="logo" src="logotipo-dom-sarmento.png" alt="Dom Sarmento">
       <div class="tagline">TRADIÇÃO E ESTILO EM CADA CORTE</div>
     </header>
 
@@ -170,7 +155,12 @@ body::after{
       <!-- Ouro -->
       <a class="btn btn--gold" href="URL_AGENDAMENTO" target="_blank" rel="noopener">
         <div class="left">
-          <div class="icon-pad"><img src="media/calendar.svg" alt="Calendário"></div>
+          <div class="icon-pad">
+            <!-- Calendário -->
+            <svg viewBox="0 0 24 24" aria-label="Calendário">
+              <path fill="#ffffff" d="M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 1 1 2 0v1zm13 6H4v9a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1zM6 10h4v4H6z"/>
+            </svg>
+          </div>
           <div>
             <div class="title">Agendar horário</div>
             <div class="sub">Reserve seu corte via Apberber</div>
@@ -181,7 +171,13 @@ body::after{
       <!-- WhatsApp -->
       <a class="btn btn--dark" href="https://wa.me/SEU_NUMERO_WHATSAPP" target="_blank" rel="noopener">
         <div class="left">
-          <div class="icon-pad"><img src="media/whatsapp.png" alt="WhatsApp"></div>
+          <div class="icon-pad">
+            <!-- WhatsApp oficial -->
+            <svg viewBox="0 0 32 32" aria-label="WhatsApp">
+              <circle cx="16" cy="16" r="14" fill="#25D366"/>
+              <path fill="#fff" d="M24 19.5c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-1 1.2-.4.3-.7.1a11 11 0 0 1-3.2-2 11.8 11.8 0 0 1-2-2.5c-.2-.3 0-.5.1-.7l.7-1c.1-.2.1-.4 0-.5 0-.2-.7-1.8-1-2.4s-.5-.6-.7-.6h-.6c-.2 0-.5.1-.8.4s-1 1-1 2.4 1 2.8 1.2 3c.2.3 2.1 3.3 5.2 4.7.7.3 1.3.6 1.8.7.8.2 1.5.2 2 .1.6-.1 1.8-.7 2-1.3.2-.6.2-1.1.1-1.3z"/>
+            </svg>
+          </div>
           <div>
             <div class="title">WhatsApp</div>
             <div class="sub">Fale direto com recepção</div>
@@ -192,7 +188,12 @@ body::after{
       <!-- Avaliações Google -->
       <a class="btn btn--dark" href="URL_AVALIACOES_GOOGLE" target="_blank" rel="noopener">
         <div class="left">
-          <div class="icon-pad"><img src="media/star.svg" alt="Avaliações"></div>
+          <div class="icon-pad">
+            <!-- Estrela -->
+            <svg viewBox="0 0 24 24" aria-label="Avaliações">
+              <path fill="#FFD54F" d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+          </div>
           <div>
             <div class="title">Avaliações no Google</div>
             <div class="sub">Conte como foi sua experiência</div>
@@ -203,7 +204,25 @@ body::after{
       <!-- Instagram -->
       <a class="btn btn--dark" href="https://www.instagram.com/domsarmento" target="_blank" rel="noopener">
         <div class="left">
-          <div class="icon-pad"><img src="media/instagram.png" alt="Instagram"></div>
+          <div class="icon-pad">
+            <!-- Instagram com gradiente e borda branca -->
+            <svg viewBox="0 0 100 100" aria-label="Instagram">
+              <defs>
+                <linearGradient id="igG" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%"  stop-color="#FEC564"/>
+                  <stop offset="25%" stop-color="#F56040"/>
+                  <stop offset="50%" stop-color="#D62976"/>
+                  <stop offset="75%" stop-color="#962FBF"/>
+                  <stop offset="100%" stop-color="#4F5BD5"/>
+                </linearGradient>
+              </defs>
+              <rect x="7" y="7" width="86" height="86" rx="22" fill="url(#igG)"/>
+              <rect x="7" y="7" width="86" height="86" rx="22" fill="none" stroke="#fff" stroke-width="8"/>
+              <rect x="25" y="25" width="50" height="50" rx="16" fill="none" stroke="#fff" stroke-width="8"/>
+              <circle cx="50" cy="50" r="14" fill="none" stroke="#fff" stroke-width="8"/>
+              <circle cx="68" cy="32" r="6" fill="#fff"/>
+            </svg>
+          </div>
           <div>
             <div class="title">Instagram oficial</div>
             <div class="sub">@domsarmento</div>
@@ -214,7 +233,12 @@ body::after{
       <!-- PIX -->
       <div class="btn btn--dark">
         <div class="left">
-          <div class="icon-pad"><img src="media/pix.svg" alt="Pix"></div>
+          <div class="icon-pad">
+            <!-- Pix -->
+            <svg viewBox="0 0 64 64" aria-label="Pix">
+              <path fill="#54D3C2" d="M22.7 12.9 32 3.6l9.3 9.3a9 9 0 0 0 12.8 0l7.3 7.3a9 9 0 0 1 0 12.8l-9.3 9.3a9 9 0 0 0 0 12.8l-7.3 7.3a9 9 0 0 1-12.8 0l-9.3-9.3a9 9 0 0 0-12.8 0l-7.3-7.3a9 9 0 0 1 0-12.8l9.3-9.3a9 9 0 0 0 0-12.8l7.3-7.3a9 9 0 0 1 12.8 0z"/>
+            </svg>
+          </div>
           <div>
             <div class="title">Pagamento via Pix</div>
             <div class="sub">@domsarmento</div>
@@ -226,16 +250,14 @@ body::after{
       </div>
     </section>
 
+    <!-- VÍDEO NO LUGAR DA GALERIA -->
+    <section class="video-wrap">
+      <!-- Se quiser autoplay no mobile: adicione autoplay muted loop playsinline e REMOVA controls -->
+      <video src="media/intro.mp4" controls playsinline></video>
+    </section>
+
     <section class="footer">
       <div class="slogan">MAIS QUE CORTES, UMA EXPERIÊNCIA DOM SARMENTO</div>
-      <div class="gallery">
-        <img src="corte1.jpg" alt="">
-        <img src="corte2.jpg" alt="">
-        <img src="corte3.jpg" alt="">
-        <img src="corte4.jpg" alt="">
-        <img src="corte5.jpg" alt="">
-        <img src="corte6.jpg" alt="">
-      </div>
     </section>
   </main>
 </body>
