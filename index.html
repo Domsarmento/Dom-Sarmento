@@ -42,7 +42,7 @@ body::after{
 .tagline{
   color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase;
   font-size:clamp(18px,4vw,22px);
-  margin:6px auto 12px; /* mais perto da logo e do botão */
+  margin:6px auto 12px;
 }
 
 /* ===== Cards ===== */
@@ -137,7 +137,7 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 .car-arrow:active{ transform:translateY(-50%) scale(.98) }
 .car-arrow.prev{ left:8px } .car-arrow.next{ right:8px }
 
-/* ====== MODAIS (Wi-Fi e PIX) ====== */
+/* ====== MODAIS ====== */
 .modal{ position:fixed; inset:0; background:rgba(0,0,0,.78); display:none; place-items:center; z-index:50; padding:16px }
 .modal.open{ display:grid }
 .card{
@@ -166,7 +166,6 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 .btn-pass{ background:var(--roxinho); color:#fff }
 .btn-open{ background:var(--ciano) }
 .note{ color:#cfcfcf; font-size:13px; text-align:center; margin-top:6px }
-
 /* PIX modal */
 .bank-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:12px }
 .bank-grid a{
@@ -174,7 +173,7 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
   border:1px solid rgba(255,255,255,.08);
 }
 .bank-grid a:active{ transform:scale(.98) }
-.copy-ok{ display:none; margin-top:8px; color:#9ae6b4; font-weight:700; text-align:center }
+.copy-ok{ display:none; margin-top:12px; color:#9ae6b4; font-weight:800; text-align:center; font-size:14px }
 .copy-ok.show{ display:block }
 </style>
 </head>
@@ -263,10 +262,10 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         <button class="car-arrow prev" aria-label="Anterior">‹</button>
         <div class="car-viewport">
           <div class="car-track">
-            <div class="car-slide"><img src="media/galeria1.jpg" alt="Galeria 1"></div>
-            <div class="car-slide"><img src="media/galeria2.jpg" alt="Galeria 2"></div>
-            <div class="car-slide"><img src="media/galeria3.jpg" alt="Galeria 3"></div>
-            <div class="car-slide"><img src="media/galeria4.jpg" alt="Galeria 4"></div>
+            <div class="car-slide"><img src="media:galeria1.jpg" alt="Galeria 1"></div>
+            <div class="car-slide"><img src="media:galeria2.jpg" alt="Galeria 2"></div>
+            <div class="car-slide"><img src="media:galeria3.jpg" alt="Galeria 3"></div>
+            <div class="car-slide"><img src="media:galeria4.jpg" alt="Galeria 4"></div>
           </div>
         </div>
         <button class="car-arrow next" aria-label="Próximo">›</button>
@@ -282,17 +281,13 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         <button class="close-btn" id="closeWifi">Fechar ✕</button>
       </header>
       <div class="body">
-        <div class="qr-wrap">
-          <img id="wifiQr" alt="QR do Wi-Fi">
-        </div>
+        <div class="qr-wrap"><img id="wifiQr" alt="QR do Wi-Fi"></div>
         <div class="center" id="wifiRede">Rede:</div>
         <div class="btn-row">
           <button class="btn-small btn-ssid" id="copySsid">Copiar SSID</button>
           <button class="btn-small btn-pass" id="copyPass">Copiar senha</button>
         </div>
-        <div class="center">
-          <button class="btn-small btn-open" id="wifiOpenAndroid">Abrir Wi-Fi (Android)</button>
-        </div>
+        <div class="center"><button class="btn-small btn-open" id="wifiOpenAndroid">Abrir Wi-Fi (Android)</button></div>
         <div class="note">Aponte a câmera para o QR para conectar automaticamente. No iPhone, abra Ajustes &gt; Wi-Fi.</div>
       </div>
     </div>
@@ -307,14 +302,17 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
       </header>
       <div class="body">
         <div class="center">Use um atalho abaixo para abrir seu banco. Se não abrir, a chave já está no seu clipboard.</div>
-        <div class="bank-grid">
-          <a href="nubank://"    >Nubank</a>
-          <a href="mercadopago://">Mercado Pago</a>
-          <a href="itau://"      >Itaú</a>
-          <a href="bradesco://"  >Bradesco</a>
-          <a href="caixa://"     >Caixa</a>
-          <a href="sicoob://"    >Sicoob</a>
+
+        <!-- Agora com data-app; JS faz o deep-link com fallback -->
+        <div class="bank-grid" id="bankGrid">
+          <a href="#" data-app="nubank">Nubank</a>
+          <a href="#" data-app="mercadopago">Mercado Pago</a>
+          <a href="#" data-app="itau">Itaú</a>
+          <a href="#" data-app="bradesco">Bradesco</a>
+          <a href="#" data-app="caixa">Caixa</a>
+          <a href="#" data-app="sicoob">Sicoob</a>
         </div>
+
         <div class="copy-ok" id="pixCopiedMsg">✅ Chave PIX copiada!</div>
       </div>
     </div>
@@ -325,14 +323,14 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 const WIFI = {
   ssid: 'Lukanna Estamparia_5G',
   pass: 'estampariadigital.',
-  type: 'WPA' // WEP | WPA | nopass
+  type: 'WPA'
 };
 const PIX_KEY = '48991746304';
 
 /* Util */
-async function copyToClipboard(text){
-  try { await navigator.clipboard.writeText(text); } catch(e) {}
-}
+async function copyToClipboard(text){ try { await navigator.clipboard.writeText(text); } catch(e) {} }
+const isAndroid = /Android/i.test(navigator.userAgent);
+const isIOS     = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 /* ===== Vídeo autoplay reforçado ===== */
 (function () {
@@ -356,10 +354,7 @@ async function copyToClipboard(text){
   const next   = root.querySelector('.next');
   let index = 0, timer, paused = false;
 
-  function go(i){
-    index = (i + slides.length) % slides.length;
-    track.style.transform = `translateX(${-index*100}%)`;
-  }
+  function go(i){ index = (i + slides.length) % slides.length; track.style.transform = `translateX(${-index*100}%)`; }
   function start(){ stop(); timer = setInterval(()=>{ if(!paused) go(index+1); }, intervalMs); }
   function stop(){ if(timer) clearInterval(timer); }
   prev.addEventListener('click', ()=>{ go(index-1); start(); });
@@ -376,7 +371,7 @@ async function copyToClipboard(text){
   go(0); start();
 })();
 
-/* ====== Modal helpers ====== */
+/* ===== Modal helpers ===== */
 function openModal(el){ el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
 function closeModal(el){ el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
 
@@ -384,27 +379,19 @@ function closeModal(el){ el.classList.remove('open'); el.setAttribute('aria-hidd
 const wifiModal = document.getElementById('wifiModal');
 document.getElementById('btnWifi').addEventListener('click', (e)=>{
   e.preventDefault();
-  // monta QR (API simples)
   const payload = `WIFI:T:${encodeURIComponent(WIFI.type)};S:${encodeURIComponent(WIFI.ssid)};P:${encodeURIComponent(WIFI.pass)};;`;
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent(payload)}&margin=10`;
-  const img = document.getElementById('wifiQr');
-  img.src = qrUrl;
+  document.getElementById('wifiQr').src = qrUrl;
   document.getElementById('wifiRede').textContent = `Rede: ${WIFI.ssid}`;
   openModal(wifiModal);
 });
 document.getElementById('closeWifi').addEventListener('click', ()=> closeModal(wifiModal));
 wifiModal.addEventListener('click', (e)=>{ if(e.target.id==='wifiModal') closeModal(wifiModal); });
 
-document.getElementById('copySsid').addEventListener('click', async ()=>{
-  await copyToClipboard(WIFI.ssid);
-  alert('SSID copiado.');
-});
-document.getElementById('copyPass').addEventListener('click', async ()=>{
-  await copyToClipboard(WIFI.pass);
-  alert('Senha copiada.');
-});
+document.getElementById('copySsid').addEventListener('click', async ()=>{ await copyToClipboard(WIFI.ssid); alert('SSID copiado.'); });
+document.getElementById('copyPass').addEventListener('click', async ()=>{ await copyToClipboard(WIFI.pass); alert('Senha copiada.'); });
 document.getElementById('wifiOpenAndroid').addEventListener('click', async ()=>{
-  await copyToClipboard(WIFI.pass); // copia antes de abrir
+  await copyToClipboard(WIFI.pass);
   const intent = 'intent:#Intent;action=android.settings.WIFI_SETTINGS;end';
   let warned = false;
   const tip = setTimeout(()=>{ if(!warned){ warned=true; alert('A senha já foi copiada. Abra o Wi-Fi do aparelho e cole.'); } }, 1200);
@@ -412,6 +399,7 @@ document.getElementById('wifiOpenAndroid').addEventListener('click', async ()=>{
 });
 
 /* ====== PIX ====== */
+const PIX_KEY = '48991746304';
 const pixModal = document.getElementById('pixModal');
 document.getElementById('btnPix').addEventListener('click', async ()=>{
   await copyToClipboard(PIX_KEY);
@@ -420,6 +408,46 @@ document.getElementById('btnPix').addEventListener('click', async ()=>{
 });
 document.getElementById('closePix').addEventListener('click', ()=> closeModal(pixModal));
 pixModal.addEventListener('click', (e)=>{ if(e.target.id==='pixModal') closeModal(pixModal); });
+
+/* Deep links para bancos com fallback de loja (Android) */
+const BANKS = {
+  nubank:      { scheme:'nubank://',        pkg:'com.nu.production' },
+  mercadopago: { scheme:'mercadopago://',   pkg:'com.mercadopago.wallet' },
+  itau:        { scheme:'itau://',          pkg:'com.itau' },
+  bradesco:    { scheme:'bradesco://',      pkg:'com.bradesco' },
+  caixa:       { scheme:'caixa://',         pkg:'br.gov.caixa.tem' },   // pode trocar pelo pacote do app que você usa
+  sicoob:      { scheme:'sicoob://',        pkg:'br.com.sicoob.app' }
+};
+
+function openBankApp(cfg){
+  const store = `https://play.google.com/store/apps/details?id=${cfg.pkg}`;
+
+  if(isAndroid){
+    // 1) tenta via intent (melhor pro Android moderno)
+    try{
+      window.location.href = `intent://open#Intent;package=${cfg.pkg};scheme=${cfg.scheme.replace('://','')};end`;
+    }catch(e){}
+    // 2) se nada abrir, após ~1.4s manda pra Play Store
+    setTimeout(()=>{ window.open(store, '_blank'); }, 1400);
+  }else if(isIOS){
+    // iOS: tenta o esquema via iframe oculto; não tem fallback universal
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = cfg.scheme;
+    document.body.appendChild(iframe);
+    setTimeout(()=>{ document.body.removeChild(iframe); }, 1500);
+  }else{
+    // Web/Desktop: abre a página da loja Android
+    window.open(store, '_blank');
+  }
+}
+
+document.getElementById('bankGrid').addEventListener('click', (e)=>{
+  const a = e.target.closest('a[data-app]'); if(!a) return;
+  e.preventDefault();
+  const cfg = BANKS[a.dataset.app];
+  if(cfg) openBankApp(cfg);
+});
 </script>
 </body>
 </html>
