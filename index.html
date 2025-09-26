@@ -11,6 +11,7 @@
   --gold-1:#f9eebe; --gold-2:#e9c97f; --gold-3:#cfa156; --gold-4:#8c652f;
   --steel-top:#3b3b3b; --steel-mid:#262626; --steel-bot:#141414;
   --tagline:#e3c676; --ring:rgba(255,255,255,.08);
+  --teal:#69dfd6; --toast:#1d1d1d;
 }
 
 /* ===== Base & BG ===== */
@@ -29,29 +30,28 @@ body::after{
   content:""; position:fixed; inset:0;
   background:linear-gradient(180deg, rgba(0,0,0,.40), rgba(0,0,0,.65) 50%, rgba(0,0,0,.85)); z-index:0;
 }
-.page{position:relative; z-index:1; max-width:480px; margin:0 auto; padding:28px 18px 46px}
+.page{position:relative; z-index:1; max-width:520px; margin:0 auto; padding:26px 18px 48px}
 
 /* ===== Header ===== */
-.header{text-align:center; margin:2px 0 0}
+.header{text-align:center; margin:2px 0 2px}
 .logo{
-  width:clamp(300px, 70vw, 380px);
-  display:block; margin:0 auto 8px;
+  width:clamp(280px, 66vw, 400px);
+  display:block; margin:0 auto;
   filter:drop-shadow(0 12px 22px rgba(0,0,0,.40));
-  mix-blend-mode:multiply;
-  pointer-events:none;
+  mix-blend-mode:multiply; /* logo “embutida” no BG */
 }
 .tagline{
   color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase;
   font-size:clamp(18px,4vw,24px);
-  /* fica bem no meio entre logo e o primeiro botão */
-  margin:6px auto 14px;
+  /* aproxima da logo e do 1º botão */
+  margin:8px auto 12px;
 }
 
 /* ===== Cards ===== */
-.stack{display:flex; flex-direction:column; gap:18px; margin:14px 0 34px}
+.stack{display:flex; flex-direction:column; gap:18px; margin:16px 0 32px}
 .btn{
   position:relative; overflow:hidden; display:flex; align-items:center; gap:16px;
-  padding:20px; min-height:104px; border-radius:28px; text-decoration:none; color:var(--text);
+  padding:20px; min-height:110px; border-radius:28px; text-decoration:none; color:var(--text);
 }
 .btn::before{
   content:""; position:absolute; inset:0; border-radius:30px; padding:2px;
@@ -79,31 +79,30 @@ body::after{
     linear-gradient(0deg, rgba(255,255,255,.05), rgba(255,255,255,0) 28%) bottom/100% 55% no-repeat,
     linear-gradient(180deg, var(--steel-top) 0%, var(--steel-mid) 55%, var(--steel-bot) 100%);
 }
+
 .icon{
-  width:clamp(60px, 12vw, 72px);
-  height:clamp(60px, 12vw, 72px);
-  object-fit:contain; flex:0 0 auto; display:block;
+  width:64px; height:64px; object-fit:contain; flex:0 0 64px; display:block;
   filter: drop-shadow(0 2px 0 rgba(0,0,0,.15)) drop-shadow(0 6px 10px rgba(0,0,0,.35));
 }
 .btn--gold .icon{ filter: drop-shadow(0 2px 0 rgba(0,0,0,.10)) drop-shadow(0 6px 10px rgba(0,0,0,.28)); }
+
 .title{
   font-weight:800; text-transform:uppercase; letter-spacing:.01em; line-height:1.12;
-  font-size:clamp(20px,4.6vw,26px);
+  font-size:clamp(22px,5vw,26px);
 }
-.sub{ font-size:clamp(14px,3.6vw,16px); color:var(--muted); margin-top:6px }
+.sub{ font-size:clamp(15px,3.8vw,17px); color:var(--muted); margin-top:6px }
 .btn--gold .title{ color:#121212 }
 .btn--gold .sub{ color:#1f1f1f; opacity:.86 }
 
-/* Botão/Chip do Pix – RESPONSIVO */
+.row{display:flex; align-items:center; gap:16px; flex:1; min-width:0}
+
+/* Chip PIX responsivo */
 .chip{
-  flex:0 0 auto; border:0; cursor:pointer;
-  padding:12px 12px; border-radius:18px;
-  background:#69dfd6; color:#083033; font-weight:800;
-  font-size:clamp(12px, 2.9vw, 15px);
-  line-height:1.15; text-align:center;
-  max-width:44%;  /* impede estourar no mobile */
+  margin-left:auto; flex:0 1 auto; max-width:44%;
+  border:0; cursor:pointer; padding:10px 12px; border-radius:16px;
+  background:var(--teal); color:#083033; font-weight:800; font-size:14px; line-height:1.1;
+  text-align:center; white-space:normal; word-break:break-word;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
-  white-space:normal;
 }
 
 /* ===== VÍDEO ===== */
@@ -146,6 +145,23 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 .car-arrow:hover{ background:rgba(0,0,0,.55) }
 .car-arrow:active{ transform:translateY(-50%) scale(.98) }
 .car-arrow.prev{ left:8px } .car-arrow.next{ right:8px }
+
+/* ===== Modal Wi-Fi (QR) ===== */
+.modal{ position:fixed; inset:0; background:rgba(0,0,0,.78); display:none; place-items:center; z-index:70; padding:16px }
+.modal.open{ display:grid }
+.modal-card{ background:#111; border-radius:18px; padding:18px; width:min(520px, 94vw); box-shadow:0 20px 60px rgba(0,0,0,.6), inset 0 0 0 1px var(--ring) }
+.modal-card h3{ margin:0 0 10px }
+.modal-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px }
+.modal-actions button{ background:#222; color:#fff; border:1px solid rgba(255,255,255,.2); border-radius:10px; padding:10px 12px; cursor:pointer }
+.modal-img{ width:100%; border-radius:12px; background:#000; display:block }
+
+/* ===== Toast ===== */
+.toast{
+  position:fixed; left:50%; bottom:20px; transform:translateX(-50%); z-index:90;
+  background:var(--toast); color:#fff; border:1px solid rgba(255,255,255,.18);
+  padding:10px 14px; border-radius:10px; opacity:0; pointer-events:none; transition:opacity .25s ease;
+}
+.toast.show{ opacity:1 }
 </style>
 </head>
 <body>
@@ -157,60 +173,72 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 
     <section class="stack">
       <!-- Agendar -->
-      <a class="btn btn--gold" href="https://sistema.appbarber.com.br/login.php" target="_blank" rel="noopener">
+      <a class="btn btn--gold" href="URL_AGENDAMENTO" target="_blank" rel="noopener">
         <img class="icon" src="media/media:calendar.png" alt="Calendário">
-        <div>
-          <div class="title">Agendar horário</div>
-          <div class="sub">Reserve seu corte via Apberber</div>
+        <div class="row">
+          <div>
+            <div class="title">Agendar horário</div>
+            <div class="sub">Reserve seu corte via Apberber</div>
+          </div>
         </div>
       </a>
 
       <!-- Wi-Fi -->
-      <a class="btn btn--dark" href="URL_WIFI" target="_blank" rel="noopener">
+      <a class="btn btn--dark" href="#" id="btnWifi">
         <img class="icon" src="media/media:wifi.png" alt="Wi-Fi">
-        <div>
-          <div class="title">Conectar ao Wi-Fi</div>
-          <div class="sub">Internet liberada para clientes</div>
+        <div class="row">
+          <div>
+            <div class="title">Conectar ao Wi-Fi</div>
+            <div class="sub">Internet liberada para clientes</div>
+          </div>
         </div>
       </a>
 
-      <!-- Google -->
+      <!-- Avaliações -->
       <a class="btn btn--dark" href="URL_AVALIACOES_GOOGLE" target="_blank" rel="noopener">
         <img class="icon" src="media/media:star.png" alt="Avaliações no Google">
-        <div>
-          <div class="title">Avaliações no Google</div>
-          <div class="sub">Conte como foi sua experiência</div>
+        <div class="row">
+          <div>
+            <div class="title">Avaliações no Google</div>
+            <div class="sub">Conte como foi sua experiência</div>
+          </div>
         </div>
       </a>
 
       <!-- Instagram -->
       <a class="btn btn--dark" href="https://www.instagram.com/domsarmento" target="_blank" rel="noopener">
         <img class="icon" src="media/media:instagram.png" alt="Instagram">
-        <div>
-          <div class="title">Instagram oficial</div>
-          <div class="sub">@domsarmento</div>
+        <div class="row">
+          <div>
+            <div class="title">Instagram oficial</div>
+            <div class="sub">@domsarmento</div>
+          </div>
         </div>
       </a>
 
       <!-- WhatsApp -->
       <a class="btn btn--dark" href="https://wa.me/5548999535888" target="_blank" rel="noopener">
         <img class="icon" src="media/media:whatsapp.png" alt="WhatsApp">
-        <div>
-          <div class="title">WhatsApp</div>
-          <div class="sub">Fale direto com recepção</div>
+        <div class="row">
+          <div>
+            <div class="title">WhatsApp</div>
+            <div class="sub">Fale direto com recepção</div>
+          </div>
         </div>
       </a>
 
-      <!-- Pix -->
+      <!-- PIX -->
       <div class="btn btn--dark">
         <img class="icon" src="media/media:pix.png" alt="Pix">
-        <div style="flex:1; min-width:0">
-          <div class="title">Pagamento via Pix</div>
-          <div class="sub">@domsarmento</div>
+        <div class="row">
+          <div style="flex:1; min-width:0">
+            <div class="title">Pagamento via Pix</div>
+            <div class="sub">@domsarmento</div>
+          </div>
+
+          <!-- chip sempre dentro do balão -->
+          <button class="chip" id="btnPix">COPIAR CHAVE<br>48991746304</button>
         </div>
-        <button class="chip" type="button" onclick="sharePix('48991746304')">
-          COPIAR CHAVE<br>48991746304
-        </button>
       </div>
     </section>
 
@@ -241,10 +269,10 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         <button class="car-arrow prev" aria-label="Anterior">‹</button>
         <div class="car-viewport">
           <div class="car-track">
-            <div class="car-slide"><img src="media:galeria1.jpg" alt="Galeria 1"></div>
-            <div class="car-slide"><img src="media:galeria2.jpg" alt="Galeria 2"></div>
-            <div class="car-slide"><img src="media:galeria3.jpg" alt="Galeria 3"></div>
-            <div class="car-slide"><img src="media:galeria4.jpg" alt="Galeria 4"></div>
+            <div class="car-slide"><img src="media/media:galeria1.jpg" alt="Galeria 1"></div>
+            <div class="car-slide"><img src="media/media:galeria2.jpg" alt="Galeria 2"></div>
+            <div class="car-slide"><img src="media/media:galeria3.jpg" alt="Galeria 3"></div>
+            <div class="car-slide"><img src="media/media:galeria4.jpg" alt="Galeria 4"></div>
           </div>
         </div>
         <button class="car-arrow next" aria-label="Próximo">›</button>
@@ -252,22 +280,29 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
     </section>
   </main>
 
+  <!-- Modal Wi-Fi -->
+  <div class="modal" id="wifiModal" aria-hidden="true">
+    <div class="modal-card">
+      <h3>Conectar ao Wi-Fi</h3>
+      <p>Aponte a câmera para o QR Code para conectar-se automaticamente.</p>
+      <img id="wifiQR" class="modal-img" alt="QR Code Wi-Fi">
+      <div class="modal-actions">
+        <button id="copySsid">Copiar SSID</button>
+        <button id="copyPass">Copiar Senha</button>
+        <button id="closeWifi">Fechar</button>
+      </div>
+      <small style="opacity:.7">* Por segurança do sistema, sites não podem conectar ao Wi-Fi diretamente. O QR funciona em Android e iOS.</small>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
 <script>
-/* Botão Pix – share nativo ou cópia */
-async function sharePix(key){
-  const text = `Chave PIX: ${key}`;
-  try{
-    if (navigator.share) {
-      await navigator.share({ title: 'Pagamento via Pix', text });
-      return;
-    }
-  }catch(e){ /* se cancelar, continua e tenta copiar */ }
-  try{
-    await navigator.clipboard.writeText(key);
-    alert('Chave PIX copiada!\nCole no seu app do banco.');
-  }catch(e){
-    alert(text);
-  }
+/* ===== util: toast ===== */
+function toast(msg, ms=1800){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), ms);
 }
 
 /* Autoplay confiável no mobile (vídeo) */
@@ -282,9 +317,23 @@ async function sharePix(key){
   }
 })();
 
+/* ===== Botão PIX: copiar + share system ===== */
+document.getElementById('btnPix').addEventListener('click', async ()=>{
+  const chave = '48991746304';
+  try{ await navigator.clipboard.writeText(chave); }catch(e){}
+  const shareData = {
+    title: 'Chave PIX',
+    text: `Chave PIX: ${chave}`
+  };
+  if (navigator.share) {
+    try { await navigator.share(shareData); return; } catch(e){ /* usuário cancelou */ }
+  }
+  toast('Chave PIX copiada!');
+});
+
 /* ===== Carrossel simples com autoplay + setas + swipe ===== */
-(function initCarousel(rootId='galeria', intervalMs=4000){
-  const root   = document.getElementById(rootId);
+(function initCarousel(rootId, intervalMs=4000){
+  const root   = document.getElementById(rootId || 'galeria');
   if(!root) return;
   const track  = root.querySelector('.car-track');
   const slides = Array.from(root.querySelectorAll('.car-slide'));
@@ -305,13 +354,11 @@ async function sharePix(key){
   prev.addEventListener('click', ()=>{ go(index-1); start(); });
   next.addEventListener('click', ()=>{ go(index+1); start(); });
 
-  // pausa no hover/press
   root.addEventListener('mouseenter', ()=> paused = true);
   root.addEventListener('mouseleave', ()=> paused = false);
   root.addEventListener('touchstart', ()=> paused = true, {passive:true});
   root.addEventListener('touchend', ()=> paused = false);
 
-  // swipe
   let sx=0, dx=0;
   root.addEventListener('touchstart', e=>{ sx = e.touches[0].clientX; }, {passive:true});
   root.addEventListener('touchmove',  e=>{ dx = e.touches[0].clientX - sx; }, {passive:true});
@@ -320,12 +367,40 @@ async function sharePix(key){
     sx=dx=0;
   });
 
-  // visibilidade
   document.addEventListener('visibilitychange', ()=>{
     if(document.visibilityState === 'hidden') stop(); else start();
   });
 
   go(0); start();
+})();
+
+/* ===== Wi-Fi: QR + copiar SSID/senha ===== */
+(function(){
+  const SSID = 'Lukanna Estamparia_5G';   // <-- troque pelo SSID da Dom Sarmento
+  const PASS = 'estampariadigital.';      // <-- troque pela senha da Dom Sarmento
+  const TYPE = 'WPA';                      // WPA/WPA2
+
+  const modal = document.getElementById('wifiModal');
+  const open  = document.getElementById('btnWifi');
+  const close = document.getElementById('closeWifi');
+  const qrImg = document.getElementById('wifiQR');
+
+  const wifiString = `WIFI:T:${TYPE};S:${SSID};P:${PASS};;`;
+  const qrURL = `https://api.qrserver.com/v1/create-qr-code/?size=720x720&data=${encodeURIComponent(wifiString)}`;
+  qrImg.src = qrURL;
+
+  open.addEventListener('click', (e)=>{ e.preventDefault(); modal.classList.add('open'); });
+  close.addEventListener('click', ()=> modal.classList.remove('open'));
+  modal.addEventListener('click', (e)=>{ if(e.target.id==='wifiModal') modal.classList.remove('open'); });
+
+  document.getElementById('copySsid').addEventListener('click', async ()=>{
+    try{ await navigator.clipboard.writeText(SSID); }catch(e){}
+    toast('SSID copiado');
+  });
+  document.getElementById('copyPass').addEventListener('click', async ()=>{
+    try{ await navigator.clipboard.writeText(PASS); }catch(e){}
+    toast('Senha copiada');
+  });
 })();
 </script>
 </body>
