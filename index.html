@@ -201,11 +201,12 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
     </header>
 
     <section class="stack">
-      <a class="btn btn--gold" href="https://sistema.appbarber.com.br/login.php" target="_blank" rel="noopener">
+      <!-- Ajustado: botão sem href, tratado via JS para abrir App Store/Play Store -->
+      <a class="btn btn--gold" href="#" id="btnAgendar">
         <img class="icon" src="media/media:calendar.png" alt="Calendário">
         <div>
           <div class="title">Agendar horário</div>
-          <div class="sub">Reserve seu corte via Apberber</div>
+          <div class="sub">Reserve seu corte via Appbarber</div>
         </div>
       </a>
 
@@ -248,7 +249,7 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
           <div class="title">Pagamento via Pix</div>
           <div class="sub">@domsarmento</div>
         </div>
-        <button class="chip" id="btnPix">COPIAR CHAVE<br>48991746304</button>
+        <button class="chip" id="btnPix">COPIAR CHAVE<br>49991746304</button>
       </div>
     </section>
 
@@ -347,7 +348,7 @@ const WIFI = {
   pass: 'estampariadigital.',
   type: 'WPA'
 };
-const PIX_KEY = '48991746304';
+const PIX_KEY = '49991746304';
 
 /* Utils */
 async function copyToClipboard(text){ try { await navigator.clipboard.writeText(text); } catch(e) {} }
@@ -466,6 +467,22 @@ document.getElementById('bankGrid').addEventListener('click', (e)=>{
   e.preventDefault();
   const cfg = BANKS[a.dataset.app];
   if(cfg) openBankApp(cfg);
+});
+
+/* ===== AppBarber – roteamento por plataforma (NOVO) ===== */
+const ANDROID_STORE = 'https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli';
+const IOS_STORE     = 'https://apps.apple.com/br/app/appbarber-cliente/id6450795073';
+const WEB_FALLBACK  = 'https://sistema.appbarber.com.br/login.php';
+
+document.getElementById('btnAgendar')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (isAndroid) {
+    window.location.href = ANDROID_STORE;
+  } else if (isIOS) {
+    window.location.href = IOS_STORE;
+  } else {
+    window.location.href = WEB_FALLBACK;
+  }
 });
 </script>
 </body>
