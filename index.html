@@ -11,7 +11,7 @@
   --gold-1:#f9eebe; --gold-2:#e9c97f; --gold-3:#cfa156; --gold-4:#8c652f;
   --steel-top:#3b3b3b; --steel-mid:#262626; --steel-bot:#141414;
   --tagline:#e3c676; --ring:rgba(255,255,255,.08);
-  --ciano:#69dfd6; --roxo:#9f8bff;
+  --ciano:#69dfd6; --roxo:#b7a3ff;
 }
 
 /* ===== Base & BG ===== */
@@ -30,7 +30,7 @@ body::after{ content:""; position:fixed; inset:0;
 /* ===== Header ===== */
 .header{text-align:center; margin:0 0 6px}
 .logo{
-  width:clamp(280px, 70vw, 380px);
+  width:clamp(300px, 72vw, 400px);
   display:block; margin:0 auto 6px;
   filter:drop-shadow(0 12px 22px rgba(0,0,0,.40));
   mix-blend-mode:multiply;
@@ -38,14 +38,14 @@ body::after{ content:""; position:fixed; inset:0;
 .tagline{
   color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase;
   font-size:clamp(18px,4.4vw,22px);
-  margin:2px auto 10px; /* fica no meio entre logo e botão */
+  margin:4px auto 10px; /* +próxima da logo e do 1º botão */
 }
 
 /* ===== Cards (tamanhos otimizados p/ mobile) ===== */
 .stack{display:flex; flex-direction:column; gap:14px; margin:8px 0 28px}
 .btn{
   position:relative; overflow:hidden; display:flex; align-items:center; gap:14px;
-  padding:16px; min-height:90px; border-radius:24px; text-decoration:none; color:var(--text);
+  padding:16px; min-height:92px; border-radius:24px; text-decoration:none; color:var(--text);
 }
 .btn::before{ content:""; position:absolute; inset:0; border-radius:26px; padding:2px;
   background:linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 40%, var(--gold-3) 75%, var(--gold-4) 100%);
@@ -85,7 +85,7 @@ body::after{ content:""; position:fixed; inset:0;
   flex:0 0 auto; border:0; cursor:pointer; padding:10px 12px; border-radius:14px;
   background:var(--ciano); color:#083033; font-weight:800; font-size:13px; line-height:1.1;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
-  white-space:nowrap; max-width:48%; text-align:center;
+  white-space:nowrap; max-width:46%; text-align:center;
 }
 
 /* ===== VÍDEO ===== */
@@ -114,11 +114,12 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 .car-arrow:hover{ background:rgba(0,0,0,.55) } .car-arrow:active{ transform:translateY(-50%) scale(.98) }
 .car-arrow.prev{ left:8px } .car-arrow.next{ right:8px }
 
-/* ===== MODAL WIFI ===== */
+/* ===== MODAL WIFI (layout refinado) ===== */
 .modal{ position:fixed; inset:0; background:rgba(0,0,0,.78); display:none; place-items:center; z-index:60; padding:16px }
 .modal.open{ display:grid }
 .modal-card{
-  width:min(520px, 96vw); background:linear-gradient(180deg,#0f0f0f,#101010);
+  width:min(520px, 96vw);
+  background:linear-gradient(180deg,#101010,#0f0f0f);
   border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,.6), inset 0 0 0 1px var(--ring); color:#fff;
   overflow:hidden;
 }
@@ -126,13 +127,15 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 .modal-head h3{ margin:0; font-size:18px; letter-spacing:.02em }
 .modal-close{ background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:#fff; border-radius:10px; padding:8px 10px; cursor:pointer }
 .modal-body{ padding:18px; text-align:center }
-.qr-wrap{ display:inline-block; background:#0b0b0b; padding:10px; border-radius:14px; box-shadow:inset 0 0 0 1px var(--ring); }
-.qr-wrap img{ width:min(360px,80vw); height:auto; display:block; border-radius:10px }
-.wifi-name{ margin:12px 0 14px; font-weight:700 }
+.qr-title{ margin:0 auto 10px; width:fit-content; padding:8px 14px; border-radius:12px; font-weight:800;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); }
+.qr-wrap{ display:inline-block; background:#0b0b0b; padding:12px; border-radius:16px; box-shadow:inset 0 0 0 1px var(--ring); }
+.qr-wrap img, .qr-wrap canvas{ width:min(360px,80vw); height:auto; display:block; border-radius:12px }
+.wifi-name{ margin:14px 0 16px; font-weight:800; font-size:16px }
 .btn-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
-.btn-wifi{ border:0; border-radius:12px; padding:10px 14px; color:#081a1b; font-weight:800; cursor:pointer }
+.btn-wifi{ border:0; border-radius:12px; padding:11px 14px; color:#081a1b; font-weight:800; cursor:pointer; font-size:14px }
 .btn-ssid{ background:var(--ciano) } .btn-pass{ background:var(--roxo); color:#1a123b } .btn-android{ background:#72e9e1 }
-.helper{ margin-top:12px; color:#cfcfcf; font-size:13px }
+.helper{ margin-top:14px; color:#d7d7d7; font-size:13px; opacity:.9 }
 
 /* pausa carrossel no hover (desktop) */
 .carousel:hover{ --pause:1 }
@@ -248,12 +251,13 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         <button class="modal-close" id="wifiClose">Fechar ✕</button>
       </div>
       <div class="modal-body">
-        <div class="qr-wrap"><img id="wifiQR" alt="QR do Wi-Fi"></div>
+        <div class="qr-title">QR do Wi-Fi</div>
+        <div class="qr-wrap"><img id="wifiQR" alt="QR do Wi-Fi" /></div>
         <div class="wifi-name" id="wifiName">Rede: —</div>
         <div class="btn-row">
           <button class="btn-wifi btn-ssid" id="copySsid">Copiar SSID</button>
           <button class="btn-wifi btn-pass" id="copyPass">Copiar senha</button>
-          <a class="btn-wifi btn-android" id="openWifi" href="intent://#Intent;action=android.settings.WIFI_SETTINGS;end">Abrir Wi-Fi (Android)</a>
+          <button class="btn-wifi btn-android" id="openWifi">Abrir Wi-Fi (Android)</button>
         </div>
         <div class="helper">Aponte a câmera para o QR para conectar automaticamente. No iPhone, abra Ajustes &gt; Wi-Fi.</div>
       </div>
@@ -283,32 +287,37 @@ const WIFI = {
 
 /* ===== PIX copy + share ===== */
 document.getElementById('btnPix').addEventListener('click', async ()=>{
-  try{
-    await navigator.clipboard.writeText(PIX_KEY);
-  }catch(e){}
+  try{ await navigator.clipboard.writeText(PIX_KEY); }catch(e){}
   if (navigator.share){
-    try{
-      await navigator.share({title:'Chave PIX', text:`Chave PIX: ${PIX_KEY}`});
-    }catch(e){}
+    try{ await navigator.share({title:'Chave PIX', text:`Chave PIX: ${PIX_KEY}`}); }
+    catch(e){}
   } else {
     alert(`Chave PIX copiada!\n${PIX_KEY}`);
   }
 });
+
+/* ===== Helpers Wi-Fi ===== */
+function buildWifiString(cfg){
+  const esc = s => String(s).replace(/([\\;,:"])/g,'\\$1');
+  return `WIFI:T:${cfg.type};S:${esc(cfg.ssid)};P:${esc(cfg.pass)};;`;
+}
+function setWifiQR(imgEl, payload){
+  // 1ª tentativa: Google Charts
+  const url1 = 'https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=' + encodeURIComponent(payload);
+  // Fallback: qrserver
+  const url2 = 'https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=' + encodeURIComponent(payload);
+  imgEl.onerror = ()=>{ if (imgEl.dataset.tried!=='2'){ imgEl.dataset.tried='2'; imgEl.src=url2; } };
+  imgEl.src = url1;
+}
 
 /* ===== Wi-Fi Modal ===== */
 const wifiModal = document.getElementById('wifiModal');
 const wifiQR    = document.getElementById('wifiQR');
 const wifiName  = document.getElementById('wifiName');
 
-function buildWifiString(cfg){
-  // WIFI:T:WPA;S:My Wifi;P:pass;;  (escapa ; , : , " , \ , ' com \)
-  const esc = s => String(s).replace(/([\\;,:"])/g,'\\$1');
-  return `WIFI:T:${cfg.type};S:${esc(cfg.ssid)};P:${esc(cfg.pass)};;`;
-}
 function openWifiModal(){
   const payload = buildWifiString(WIFI);
-  const url = 'https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl=' + encodeURIComponent(payload);
-  wifiQR.src = url;
+  setWifiQR(wifiQR, payload);
   wifiName.textContent = 'Rede: ' + WIFI.ssid;
   wifiModal.classList.add('open');
   wifiModal.setAttribute('aria-hidden','false');
@@ -324,6 +333,33 @@ document.getElementById('copySsid').addEventListener('click', async ()=>{
 });
 document.getElementById('copyPass').addEventListener('click', async ()=>{
   try{ await navigator.clipboard.writeText(WIFI.pass); alert('Senha copiada!'); }catch(e){}
+});
+
+/* Abrir tela de Wi-Fi no Android (tenta vários formatos de intent) */
+document.getElementById('openWifi').addEventListener('click', ()=>{
+  const intents = [
+    'intent:#Intent;action=android.settings.WIFI_SETTINGS;end',
+    'intent://wifi/#Intent;scheme=android-app;package=com.android.settings;action=android.settings.WIFI_SETTINGS;end',
+    'android.settings.WIFI_SETTINGS'
+  ];
+  let tried = 0;
+  const tryNext = () => {
+    if (tried >= intents.length){
+      alert('Abra as Configurações do sistema e toque em Wi-Fi para conectar.');
+      return;
+    }
+    const i = intents[tried++];
+    try{
+      if (i.startsWith('intent:')){
+        window.location.href = i;
+      } else {
+        window.open(i, '_self');
+      }
+      // se o browser bloquear, tenta o próximo após um pequeno delay
+      setTimeout(()=>{ tryNext(); }, 350);
+    }catch(e){ tryNext(); }
+  };
+  tryNext();
 });
 
 /* ===== Carrossel simples com autoplay + setas + swipe ===== */
