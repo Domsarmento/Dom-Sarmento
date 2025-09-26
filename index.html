@@ -7,71 +7,113 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --text:#fff; --muted:#e2e2e2;
-  --gold-1:#f7e9b8; --gold-2:#e7c97f; --gold-3:#cfa156; --gold-4:#8c652f;
+  --text:#ffffff; --muted:#e8e8e8;
+  --gold-1:#f9eebe; --gold-2:#e9c97f; --gold-3:#cfa156; --gold-4:#8c652f;
+  --steel-top:#3b3b3b; --steel-mid:#262626; --steel-bot:#141414;
   --tagline:#e3c676;
-  --steel-top:#3b3b3b; --steel-mid:#262626; --steel-bot:#151515;
 }
+/* ===== Base & BG ===== */
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;position:relative;overflow-x:hidden;}
-/* BG + overlay */
-body::before{content:"";position:fixed;inset:0;background:url('background-dom-sarmento.jpg') center/cover no-repeat,#0b0b0b;z-index:0;}
-body::after{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.40),rgba(0,0,0,.65) 50%,rgba(0,0,0,.80));z-index:0;}
-.page{position:relative;z-index:1;max-width:460px;margin:0 auto;padding:26px 18px 44px;}
-/* Header */
-.header{text-align:center;margin:6px 0 12px;}
+body{
+  margin:0; color:var(--text);
+  font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  position:relative; overflow-x:hidden;
+}
+body::before{
+  content:""; position:fixed; inset:0;
+  background:url('background-dom-sarmento.jpg') center/cover no-repeat, #0b0b0b; z-index:0;
+}
+body::after{
+  content:""; position:fixed; inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.40), rgba(0,0,0,.65) 50%, rgba(0,0,0,.85)); z-index:0;
+}
+.page{position:relative; z-index:1; max-width:460px; margin:0 auto; padding:26px 18px 44px}
+
+/* ===== Header ===== */
+.header{text-align:center; margin:6px 0 12px}
 .logo{
-  width:240px;max-width:80vw;display:block;margin:0 auto 8px;
-  mix-blend-mode:multiply;                      /* <- sem caixa */
-  filter:contrast(1.06) drop-shadow(0 10px 18px rgba(0,0,0,.35));
+  width:240px; max-width:80vw; display:block; margin:0 auto 8px;
+  mix-blend-mode:multiply; /* remove a “caixa” do logo */
+  filter:contrast(1.06) drop-shadow(0 12px 22px rgba(0,0,0,.40));
 }
-.tagline{color:var(--tagline);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:clamp(16px,3.6vw,22px);}
-/* Cards */
-.stack{display:flex;flex-direction:column;gap:18px;margin:18px 0 36px;}
+.tagline{
+  color:#e3c676; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+  font-size:clamp(16px,3.6vw,22px);
+}
+
+/* ===== Cards ===== */
+.stack{display:flex; flex-direction:column; gap:18px; margin:18px 0 36px}
 .btn{
-  position:relative;overflow:hidden;display:flex;align-items:center;gap:16px;
-  padding:18px;min-height:96px;border-radius:26px;text-decoration:none;color:var(--text);
+  position:relative; overflow:hidden; display:flex; align-items:center; gap:16px;
+  padding:18px; min-height:96px; border-radius:26px; text-decoration:none; color:var(--text);
 }
+/* Borda dourada brilhosa em todos */
 .btn::before{
-  content:"";position:absolute;inset:0;border-radius:28px;padding:2px;
-  background:linear-gradient(180deg,var(--gold-1) 0%,var(--gold-2) 40%,var(--gold-3) 75%,var(--gold-4) 100%);
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
-  box-shadow:0 10px 18px rgba(0,0,0,.45),0 0 18px rgba(255,214,120,.14);
+  content:""; position:absolute; inset:0; border-radius:28px; padding:2px;
+  background:linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 40%, var(--gold-3) 75%, var(--gold-4) 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude;
+  box-shadow:0 0 22px rgba(255,215,130,.22), 0 14px 30px rgba(0,0,0,.45);
+  pointer-events:none;
 }
+/* Fundo ouro com gloss forte */
 .btn--gold{
   background:
-    radial-gradient(120% 200% at 10% -40%,rgba(255,255,255,.55),transparent 42%),
-    linear-gradient(180deg,var(--gold-1) 0%,var(--gold-2) 45%,var(--gold-3) 70%,var(--gold-4) 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 14px 28px rgba(255,214,120,.25);
+    radial-gradient(160% 220% at 0% -40%, rgba(255,255,255,.70), transparent 45%),
+    linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 45%, var(--gold-3) 70%, var(--gold-4) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.38), 0 18px 36px rgba(255,214,120,.28);
 }
+.btn--gold::after{
+  /* faixa de brilho “gloss” no meio */
+  content:""; position:absolute; left:10px; right:10px; top:28%;
+  height:22%; border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0));
+  filter:blur(1px);
+  pointer-events:none;
+}
+/* Fundo metal escuro suave */
 .btn--dark{
   background:
-    linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,0) 22%) top/100% 50% no-repeat,
-    linear-gradient(0deg,rgba(255,255,255,.06),rgba(255,255,255,0) 28%) bottom/100% 55% no-repeat,
-    linear-gradient(180deg,var(--steel-top) 0%,var(--steel-mid) 55%,var(--steel-bot) 100%);
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0) 24%) top/100% 50% no-repeat,
+    linear-gradient(0deg, rgba(255,255,255,.05), rgba(255,255,255,0) 28%) bottom/100% 55% no-repeat,
+    linear-gradient(180deg, var(--steel-top) 0%, var(--steel-mid) 55%, var(--steel-bot) 100%);
 }
-.left{display:flex;align-items:center;gap:16px;min-width:0;flex:1;}
-/* Almofada do ícone */
-.icon-pad{
-  width:64px;height:64px;flex:0 0 64px;display:grid;place-items:center;border-radius:18px;
-  background:rgba(0,0,0,.22);outline:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+
+/* ÍCONES SOLTOS (sem caixa) */
+.icon{
+  width:42px; height:42px; object-fit:contain; flex:0 0 42px; display:block;
+  filter: drop-shadow(0 2px 0 rgba(0,0,0,.15)) drop-shadow(0 6px 10px rgba(0,0,0,.35));
 }
-.btn--gold .icon-pad{background:rgba(0,0,0,.12);}
-.icon-pad img,.icon-pad svg{width:40px;height:40px;object-fit:contain;display:block;}
-.title{font-weight:800;text-transform:uppercase;letter-spacing:.01em;line-height:1.1;font-size:clamp(18px,3.8vw,22px);}
-.sub{font-size:14px;color:var(--muted);margin-top:6px;}
-.btn--gold .title{color:#121212;} .btn--gold .sub{color:#1f1f1f;opacity:.85;}
+.btn--gold .icon{ filter: drop-shadow(0 2px 0 rgba(0,0,0,.10)) drop-shadow(0 6px 10px rgba(0,0,0,.28)); }
+
+/* Texto dos cards */
+.title{
+  font-weight:800; text-transform:uppercase; letter-spacing:.01em; line-height:1.1;
+  font-size:clamp(18px,3.9vw,22px);
+}
+.sub{ font-size:14px; color:var(--muted); margin-top:6px }
+.btn--gold .title{ color:#121212 }
+.btn--gold .sub{ color:#1f1f1f; opacity:.86 }
+
 /* Chip Pix */
-.chip{flex:0 0 auto;border:0;cursor:pointer;padding:14px 16px;border-radius:18px;background:#69dfd6;color:#083033;font-weight:800;font-size:15px;box-shadow:inset 0 1px 0 rgba(255,255,255,.55);}
-/* Vídeo */
-.video-wrap{margin-top:16px;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.35);}
-.video-wrap video{width:100%;height:auto;display:block;}
-/* Footer */
-.footer{text-align:center;margin-top:14px;}
-.footer .slogan{color:var(--tagline);font-weight:800;letter-spacing:.06em;text-transform:uppercase;}
-@media (min-width:480px){.page{padding:30px 24px 48px}.logo{width:250px}.btn{min-height:100px}}
+.chip{
+  flex:0 0 auto; border:0; cursor:pointer; padding:14px 16px; border-radius:18px;
+  background:#69dfd6; color:#083033; font-weight:800; font-size:15px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+}
+
+/* Vídeo + Slogan */
+.footer{text-align:center; margin-top:14px}
+.footer .slogan{ color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase }
+.video-wrap{ margin-top:16px; border-radius:12px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.35) }
+.video-wrap video{ width:100%; height:auto; display:block }
+
+@media (min-width:480px){
+  .page{padding:30px 24px 48px}
+  .logo{width:250px}
+  .btn{min-height:100px}
+}
 </style>
 </head>
 <body>
@@ -84,41 +126,55 @@ body::after{content:"";position:fixed;inset:0;background:linear-gradient(180deg,
     <section class="stack">
       <!-- 1. Agendar (ouro) -->
       <a class="btn btn--gold" href="URL_AGENDAMENTO" target="_blank" rel="noopener">
-        <div class="left">
-          <div class="icon-pad"><img src="media/media:calendar.jpg" alt="Calendário"></div>
-          <div><div class="title">Agendar horário</div><div class="sub">Reserve seu corte via Apberber</div></div>
+        <img class="icon" src="media/media:calendar.jpg" alt="Calendário">
+        <div>
+          <div class="title">Agendar horário</div>
+          <div class="sub">Reserve seu corte via Apberber</div>
         </div>
       </a>
 
       <!-- 2. Conectar Wi-Fi -->
       <a class="btn btn--dark" href="URL_WIFI" target="_blank" rel="noopener">
-        <div class="left">
-          <div class="icon-pad"><img src="media/media:wifi.jpg" alt="Wi-Fi"></div>
-          <div><div class="title">Conectar ao Wi-Fi</div><div class="sub">Internet liberada para clientes</div></div>
+        <img class="icon" src="media/media:wifi.jpg" alt="Wi-Fi">
+        <div>
+          <div class="title">Conectar ao Wi-Fi</div>
+          <div class="sub">Internet liberada para clientes</div>
         </div>
       </a>
 
       <!-- 3. Avaliações -->
       <a class="btn btn--dark" href="URL_AVALIACOES_GOOGLE" target="_blank" rel="noopener">
-        <div class="left">
-          <div class="icon-pad"><img src="media/media:star.jpg" alt="Avaliações"></div>
-          <div><div class="title">Avaliações no Google</div><div class="sub">Conte como foi sua experiência</div></div>
+        <img class="icon" src="media/media:star.jpg" alt="Avaliações no Google">
+        <div>
+          <div class="title">Avaliações no Google</div>
+          <div class="sub">Conte como foi sua experiência</div>
         </div>
       </a>
 
       <!-- 4. Instagram -->
       <a class="btn btn--dark" href="https://www.instagram.com/domsarmento" target="_blank" rel="noopener">
-        <div class="left">
-          <div class="icon-pad"><img src="media/media:instagram.jpg" alt="Instagram"></div>
-          <div><div class="title">Instagram oficial</div><div class="sub">@domsarmento</div></div>
+        <img class="icon" src="media/media:instagram.jpg" alt="Instagram">
+        <div>
+          <div class="title">Instagram oficial</div>
+          <div class="sub">@domsarmento</div>
         </div>
       </a>
 
-      <!-- 5. PIX -->
+      <!-- 5. WhatsApp -->
+      <a class="btn btn--dark" href="https://wa.me/SEU_NUMERO_WHATSAPP" target="_blank" rel="noopener">
+        <img class="icon" src="media/media:whatsapp.png" alt="WhatsApp">
+        <div>
+          <div class="title">WhatsApp</div>
+          <div class="sub">Fale direto com recepção</div>
+        </div>
+      </a>
+
+      <!-- 6. Pix -->
       <div class="btn btn--dark">
-        <div class="left">
-          <div class="icon-pad"><img src="media/media:pix.jpg" alt="Pix"></div>
-          <div><div class="title">Pagamento via Pix</div><div class="sub">@domsarmento</div></div>
+        <img class="icon" src="media/media:pix.jpg" alt="Pix">
+        <div style="flex:1">
+          <div class="title">Pagamento via Pix</div>
+          <div class="sub">@domsarmento</div>
         </div>
         <button class="chip" onclick="navigator.clipboard.writeText('48991746304'); alert('Chave PIX 48991746304 copiada!')">
           COPIAR CHAVE<br>48991746304
@@ -126,13 +182,11 @@ body::after{content:"";position:fixed;inset:0;background:linear-gradient(180deg,
       </div>
     </section>
 
-    <!-- Slogan + Vídeo -->
     <section class="footer">
       <div class="slogan">MAIS QUE CORTES, UMA EXPERIÊNCIA DOM SARMENTO 💈</div>
     </section>
 
     <section class="video-wrap">
-      <!-- autoplay para mobile: muted + playsinline são obrigatórios -->
       <video src="media/intro.mp4" autoplay muted loop playsinline></video>
     </section>
   </main>
