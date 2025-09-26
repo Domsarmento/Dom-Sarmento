@@ -31,24 +31,24 @@ body::after{
 }
 .page{position:relative; z-index:1; max-width:480px; margin:0 auto; padding:28px 18px 46px}
 
-/* ===== Header — logo maior + respiro equilibrado ===== */
-.header{
-  display:flex; flex-direction:column; align-items:center;
-  gap:clamp(10px, 2.8vw, 16px);           /* controla o espaço entre logo, frase e 1º botão */
-  margin:6px 0 10px; text-align:center;
-}
+/* ===== Header ===== */
+.header{text-align:center; margin:2px 0 0}
 .logo{
-  width:clamp(300px, 70vw, 420px);        /* AQUI aumentamos a logo */
-  display:block;
+  width:clamp(300px, 70vw, 380px);
+  display:block; margin:0 auto 8px;
   filter:drop-shadow(0 12px 22px rgba(0,0,0,.40));
+  mix-blend-mode:multiply;
+  pointer-events:none;
 }
 .tagline{
   color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase;
-  font-size:clamp(18px,4.2vw,26px);
+  font-size:clamp(18px,4vw,24px);
+  /* fica bem no meio entre logo e o primeiro botão */
+  margin:6px auto 14px;
 }
 
 /* ===== Cards ===== */
-.stack{display:flex; flex-direction:column; gap:18px; margin:18px 0 36px}
+.stack{display:flex; flex-direction:column; gap:18px; margin:14px 0 34px}
 .btn{
   position:relative; overflow:hidden; display:flex; align-items:center; gap:16px;
   padding:20px; min-height:104px; border-radius:28px; text-decoration:none; color:var(--text);
@@ -80,40 +80,31 @@ body::after{
     linear-gradient(180deg, var(--steel-top) 0%, var(--steel-mid) 55%, var(--steel-bot) 100%);
 }
 .icon{
-  width:64px; height:64px; object-fit:contain; flex:0 0 64px; display:block;
+  width:clamp(60px, 12vw, 72px);
+  height:clamp(60px, 12vw, 72px);
+  object-fit:contain; flex:0 0 auto; display:block;
   filter: drop-shadow(0 2px 0 rgba(0,0,0,.15)) drop-shadow(0 6px 10px rgba(0,0,0,.35));
 }
 .btn--gold .icon{ filter: drop-shadow(0 2px 0 rgba(0,0,0,.10)) drop-shadow(0 6px 10px rgba(0,0,0,.28)); }
 .title{
   font-weight:800; text-transform:uppercase; letter-spacing:.01em; line-height:1.12;
-  font-size:clamp(20px,4.4vw,24px);
+  font-size:clamp(20px,4.6vw,26px);
 }
 .sub{ font-size:clamp(14px,3.6vw,16px); color:var(--muted); margin-top:6px }
 .btn--gold .title{ color:#121212 }
 .btn--gold .sub{ color:#1f1f1f; opacity:.86 }
 
-/* ===== PIX chip dentro do cartão ===== */
+/* Botão/Chip do Pix – RESPONSIVO */
 .chip{
-  flex:0 0 auto; margin-left:auto;
-  border:0; cursor:pointer; padding:14px 16px; border-radius:18px;
-  background:#69dfd6; color:#083033; font-weight:800; font-size:15px; line-height:1.1;
-  text-align:center; max-width:46%; white-space:normal;  /* NUNCA estoura o balão */
+  flex:0 0 auto; border:0; cursor:pointer;
+  padding:12px 12px; border-radius:18px;
+  background:#69dfd6; color:#083033; font-weight:800;
+  font-size:clamp(12px, 2.9vw, 15px);
+  line-height:1.15; text-align:center;
+  max-width:44%;  /* impede estourar no mobile */
   box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+  white-space:normal;
 }
-.chip:active{ transform:scale(.98); }
-@media (max-width:380px){
-  .chip{ font-size:13px; padding:12px; border-radius:16px; }
-}
-
-/* Toast de feedback */
-.toast{
-  position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
-  background:rgba(0,0,0,.85); color:#fff; padding:10px 14px;
-  border-radius:12px; font-size:14px; z-index:90;
-  box-shadow:0 8px 30px rgba(0,0,0,.4);
-  opacity:0; pointer-events:none; transition:opacity .25s ease;
-}
-.toast.show{ opacity:1; }
 
 /* ===== VÍDEO ===== */
 .section{ margin:22px auto 12px }
@@ -165,7 +156,8 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
     </header>
 
     <section class="stack">
-      <a class="btn btn--gold" href="URL_AGENDAMENTO" target="_blank" rel="noopener">
+      <!-- Agendar -->
+      <a class="btn btn--gold" href="https://sistema.appbarber.com.br/login.php" target="_blank" rel="noopener">
         <img class="icon" src="media/media:calendar.png" alt="Calendário">
         <div>
           <div class="title">Agendar horário</div>
@@ -173,6 +165,7 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         </div>
       </a>
 
+      <!-- Wi-Fi -->
       <a class="btn btn--dark" href="URL_WIFI" target="_blank" rel="noopener">
         <img class="icon" src="media/media:wifi.png" alt="Wi-Fi">
         <div>
@@ -181,6 +174,7 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         </div>
       </a>
 
+      <!-- Google -->
       <a class="btn btn--dark" href="URL_AVALIACOES_GOOGLE" target="_blank" rel="noopener">
         <img class="icon" src="media/media:star.png" alt="Avaliações no Google">
         <div>
@@ -189,6 +183,7 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         </div>
       </a>
 
+      <!-- Instagram -->
       <a class="btn btn--dark" href="https://www.instagram.com/domsarmento" target="_blank" rel="noopener">
         <img class="icon" src="media/media:instagram.png" alt="Instagram">
         <div>
@@ -197,7 +192,8 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         </div>
       </a>
 
-      <a class="btn btn--dark" href="https://wa.me/SEU_NUMERO_WHATSAPP" target="_blank" rel="noopener">
+      <!-- WhatsApp -->
+      <a class="btn btn--dark" href="https://wa.me/5548999535888" target="_blank" rel="noopener">
         <img class="icon" src="media/media:whatsapp.png" alt="WhatsApp">
         <div>
           <div class="title">WhatsApp</div>
@@ -205,14 +201,14 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         </div>
       </a>
 
-      <!-- PIX -->
+      <!-- Pix -->
       <div class="btn btn--dark">
         <img class="icon" src="media/media:pix.png" alt="Pix">
-        <div style="flex:1">
+        <div style="flex:1; min-width:0">
           <div class="title">Pagamento via Pix</div>
           <div class="sub">@domsarmento</div>
         </div>
-        <button class="chip" id="btnPix">
+        <button class="chip" type="button" onclick="sharePix('48991746304')">
           COPIAR CHAVE<br>48991746304
         </button>
       </div>
@@ -245,10 +241,10 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         <button class="car-arrow prev" aria-label="Anterior">‹</button>
         <div class="car-viewport">
           <div class="car-track">
-            <div class="car-slide"><img src="media/galeria1.jpg" alt="Galeria 1"></div>
-            <div class="car-slide"><img src="media/galeria2.jpg" alt="Galeria 2"></div>
-            <div class="car-slide"><img src="media/galeria3.jpg" alt="Galeria 3"></div>
-            <div class="car-slide"><img src="media/galeria4.jpg" alt="Galeria 4"></div>
+            <div class="car-slide"><img src="media:galeria1.jpg" alt="Galeria 1"></div>
+            <div class="car-slide"><img src="media:galeria2.jpg" alt="Galeria 2"></div>
+            <div class="car-slide"><img src="media:galeria3.jpg" alt="Galeria 3"></div>
+            <div class="car-slide"><img src="media:galeria4.jpg" alt="Galeria 4"></div>
           </div>
         </div>
         <button class="car-arrow next" aria-label="Próximo">›</button>
@@ -256,10 +252,24 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
     </section>
   </main>
 
-<!-- Toast (feedback do PIX) -->
-<div id="toast" class="toast" role="status" aria-live="polite">Chave PIX copiada!</div>
-
 <script>
+/* Botão Pix – share nativo ou cópia */
+async function sharePix(key){
+  const text = `Chave PIX: ${key}`;
+  try{
+    if (navigator.share) {
+      await navigator.share({ title: 'Pagamento via Pix', text });
+      return;
+    }
+  }catch(e){ /* se cancelar, continua e tenta copiar */ }
+  try{
+    await navigator.clipboard.writeText(key);
+    alert('Chave PIX copiada!\nCole no seu app do banco.');
+  }catch(e){
+    alert(text);
+  }
+}
+
 /* Autoplay confiável no mobile (vídeo) */
 (function () {
   const v = document.getElementById('videoBarbearia');
@@ -272,50 +282,34 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
   }
 })();
 
-/* ===== PIX: copia + share do sistema ===== */
-(function(){
-  const PIX_KEY = '48991746304';
-  const btn = document.getElementById('btnPix');
-  const toast = document.getElementById('toast');
-
-  function showToast(msg){
-    if(!toast) return;
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(()=> toast.classList.remove('show'), 1600);
-  }
-
-  async function handlePix(){
-    try { await navigator.clipboard.writeText(PIX_KEY); } catch(e){}
-    showToast('Chave PIX copiada!');
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: 'Chave PIX', text: `Chave PIX: ${PIX_KEY}` });
-      } catch(e){ /* usuário cancelou, ok */ }
-    }
-  }
-  if(btn) btn.addEventListener('click', handlePix);
-})();
-
-/* ===== Carrossel simples com setas + swipe ===== */
-(function initCarousel(rootId, intervalMs=4000){
-  const root   = document.getElementById(rootId || 'galeria');
+/* ===== Carrossel simples com autoplay + setas + swipe ===== */
+(function initCarousel(rootId='galeria', intervalMs=4000){
+  const root   = document.getElementById(rootId);
   if(!root) return;
   const track  = root.querySelector('.car-track');
   const slides = Array.from(root.querySelectorAll('.car-slide'));
   const prev   = root.querySelector('.prev');
   const next   = root.querySelector('.next');
-  let index = 0, timer;
+  let index = 0, timer, paused = false;
 
   function go(i){
     index = (i + slides.length) % slides.length;
     track.style.transform = `translateX(${-index*100}%)`;
   }
-  function start(){ stop(); timer = setInterval(()=> go(index+1), intervalMs); }
+  function start(){
+    stop();
+    timer = setInterval(()=>{ if(!paused) go(index+1); }, intervalMs);
+  }
   function stop(){ if(timer) clearInterval(timer); }
 
   prev.addEventListener('click', ()=>{ go(index-1); start(); });
   next.addEventListener('click', ()=>{ go(index+1); start(); });
+
+  // pausa no hover/press
+  root.addEventListener('mouseenter', ()=> paused = true);
+  root.addEventListener('mouseleave', ()=> paused = false);
+  root.addEventListener('touchstart', ()=> paused = true, {passive:true});
+  root.addEventListener('touchend', ()=> paused = false);
 
   // swipe
   let sx=0, dx=0;
@@ -326,7 +320,11 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
     sx=dx=0;
   });
 
-  document.addEventListener('visibilitychange', ()=>{ document.hidden ? stop() : start(); });
+  // visibilidade
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.visibilityState === 'hidden') stop(); else start();
+  });
+
   go(0); start();
 })();
 </script>
