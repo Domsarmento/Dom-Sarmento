@@ -262,10 +262,11 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         <button class="car-arrow prev" aria-label="Anterior">‹</button>
         <div class="car-viewport">
           <div class="car-track">
-            <div class="car-slide"><img src="media:galeria1.jpg" alt="Galeria 1"></div>
-            <div class="car-slide"><img src="media:galeria2.jpg" alt="Galeria 2"></div>
-            <div class="car-slide"><img src="media:galeria3.jpg" alt="Galeria 3"></div>
-            <div class="car-slide"><img src="media:galeria4.jpg" alt="Galeria 4"></div>
+            <!-- CORRIGIDO: adicionada a pasta 'media/' nos caminhos -->
+            <div class="car-slide"><img src="media/media:galeria1.jpg" alt="Galeria 1"></div>
+            <div class="car-slide"><img src="media/media:galeria2.jpg" alt="Galeria 2"></div>
+            <div class="car-slide"><img src="media/media:galeria3.jpg" alt="Galeria 3"></div>
+            <div class="car-slide"><img src="media/media:galeria4.jpg" alt="Galeria 4"></div>
           </div>
         </div>
         <button class="car-arrow next" aria-label="Próximo">›</button>
@@ -302,8 +303,6 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
       </header>
       <div class="body">
         <div class="center">Use um atalho abaixo para abrir seu banco. Se não abrir, a chave já está no seu clipboard.</div>
-
-        <!-- Agora com data-app; JS faz o deep-link com fallback -->
         <div class="bank-grid" id="bankGrid">
           <a href="#" data-app="nubank">Nubank</a>
           <a href="#" data-app="mercadopago">Mercado Pago</a>
@@ -312,7 +311,6 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
           <a href="#" data-app="caixa">Caixa</a>
           <a href="#" data-app="sicoob">Sicoob</a>
         </div>
-
         <div class="copy-ok" id="pixCopiedMsg">✅ Chave PIX copiada!</div>
       </div>
     </div>
@@ -325,7 +323,7 @@ const WIFI = {
   pass: 'estampariadigital.',
   type: 'WPA'
 };
-const PIX_KEY = '48991746304';
+const PIX_KEY = '48991746304'; // <-- única declaração
 
 /* Util */
 async function copyToClipboard(text){ try { await navigator.clipboard.writeText(text); } catch(e) {} }
@@ -333,120 +331,95 @@ const isAndroid = /Android/i.test(navigator.userAgent);
 const isIOS     = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 /* ===== Vídeo autoplay reforçado ===== */
-(function () {
-  const v = document.getElementById('videoBarbearia');
-  if (!v) return;
-  const tryPlay = () => v.play().catch(()=>{});
-  if (v.autoplay) {
-    if (document.visibilityState === 'visible') tryPlay();
-    document.addEventListener('visibilitychange', tryPlay, {passive:true});
-    window.addEventListener('touchstart', tryPlay, {once:true, passive:true});
-  }
-})();
+(()=>{const v=document.getElementById('videoBarbearia');if(!v)return;const p=()=>v.play().catch(()=>{});if(v.autoplay){if(document.visibilityState==='visible')p();document.addEventListener('visibilitychange',p,{passive:true});window.addEventListener('touchstart',p,{once:true,passive:true});}})();
 
 /* ===== Carrossel simples ===== */
-(function initCarousel(rootId, intervalMs=4000){
-  const root   = document.getElementById(rootId || 'galeria');
-  if(!root) return;
-  const track  = root.querySelector('.car-track');
-  const slides = Array.from(root.querySelectorAll('.car-slide'));
-  const prev   = root.querySelector('.prev');
-  const next   = root.querySelector('.next');
-  let index = 0, timer, paused = false;
-
-  function go(i){ index = (i + slides.length) % slides.length; track.style.transform = `translateX(${-index*100}%)`; }
-  function start(){ stop(); timer = setInterval(()=>{ if(!paused) go(index+1); }, intervalMs); }
-  function stop(){ if(timer) clearInterval(timer); }
-  prev.addEventListener('click', ()=>{ go(index-1); start(); });
-  next.addEventListener('click', ()=>{ go(index+1); start(); });
-  root.addEventListener('mouseenter', ()=> paused = true);
-  root.addEventListener('mouseleave', ()=> paused = false);
-  root.addEventListener('touchstart', ()=> paused = true, {passive:true});
-  root.addEventListener('touchend', ()=> paused = false);
-  let sx=0, dx=0;
-  root.addEventListener('touchstart', e=>{ sx = e.touches[0].clientX; }, {passive:true});
-  root.addEventListener('touchmove',  e=>{ dx = e.touches[0].clientX - sx; }, {passive:true});
-  root.addEventListener('touchend',   ()=>{ if(Math.abs(dx) > 40){ dx<0 ? go(index+1) : go(index-1); start(); } sx=dx=0; });
-  document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'hidden') stop(); else start(); });
+((rootId,intervalMs=4000)=>{
+  const root=document.getElementById(rootId||'galeria'); if(!root) return;
+  const track=root.querySelector('.car-track');
+  const slides=[...root.querySelectorAll('.car-slide')];
+  const prev=root.querySelector('.prev'), next=root.querySelector('.next');
+  let i=0,timer,paused=false;
+  const go=n=>{ i=(n+slides.length)%slides.length; track.style.transform=`translateX(${-i*100}%)`; };
+  const start=()=>{ stop(); timer=setInterval(()=>{ if(!paused) go(i+1); },intervalMs); };
+  const stop =()=>{ if(timer) clearInterval(timer); };
+  prev.addEventListener('click',()=>{ go(i-1); start(); });
+  next.addEventListener('click',()=>{ go(i+1); start(); });
+  root.addEventListener('mouseenter',()=>paused=true);
+  root.addEventListener('mouseleave',()=>paused=false);
+  root.addEventListener('touchstart',()=>paused=true,{passive:true});
+  root.addEventListener('touchend',()=>paused=false);
+  let sx=0,dx=0;
+  root.addEventListener('touchstart',e=>{ sx=e.touches[0].clientX; },{passive:true});
+  root.addEventListener('touchmove', e=>{ dx=e.touches[0].clientX-sx; },{passive:true});
+  root.addEventListener('touchend', ()=>{ if(Math.abs(dx)>40){ dx<0?go(i+1):go(i-1); start(); } sx=dx=0; });
+  document.addEventListener('visibilitychange',()=>{ document.visibilityState==='hidden'?stop():start(); });
   go(0); start();
 })();
 
 /* ===== Modal helpers ===== */
-function openModal(el){ el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
-function closeModal(el){ el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
+const openModal = el => { el.classList.add('open'); el.setAttribute('aria-hidden','false'); };
+const closeModal = el => { el.classList.remove('open'); el.setAttribute('aria-hidden','true'); };
 
-/* ====== Wi-Fi modal ====== */
-const wifiModal = document.getElementById('wifiModal');
-document.getElementById('btnWifi').addEventListener('click', (e)=>{
+/* ===== Wi-Fi modal ===== */
+const wifiModal=document.getElementById('wifiModal');
+document.getElementById('btnWifi').addEventListener('click',e=>{
   e.preventDefault();
-  const payload = `WIFI:T:${encodeURIComponent(WIFI.type)};S:${encodeURIComponent(WIFI.ssid)};P:${encodeURIComponent(WIFI.pass)};;`;
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent(payload)}&margin=10`;
-  document.getElementById('wifiQr').src = qrUrl;
-  document.getElementById('wifiRede').textContent = `Rede: ${WIFI.ssid}`;
+  const payload=`WIFI:T:${encodeURIComponent(WIFI.type)};S:${encodeURIComponent(WIFI.ssid)};P:${encodeURIComponent(WIFI.pass)};;`;
+  const qrUrl=`https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent(payload)}&margin=10`;
+  document.getElementById('wifiQr').src=qrUrl;
+  document.getElementById('wifiRede').textContent=`Rede: ${WIFI.ssid}`;
   openModal(wifiModal);
 });
-document.getElementById('closeWifi').addEventListener('click', ()=> closeModal(wifiModal));
-wifiModal.addEventListener('click', (e)=>{ if(e.target.id==='wifiModal') closeModal(wifiModal); });
-
-document.getElementById('copySsid').addEventListener('click', async ()=>{ await copyToClipboard(WIFI.ssid); alert('SSID copiado.'); });
-document.getElementById('copyPass').addEventListener('click', async ()=>{ await copyToClipboard(WIFI.pass); alert('Senha copiada.'); });
-document.getElementById('wifiOpenAndroid').addEventListener('click', async ()=>{
+document.getElementById('closeWifi').addEventListener('click',()=>closeModal(wifiModal));
+wifiModal.addEventListener('click',e=>{ if(e.target.id==='wifiModal') closeModal(wifiModal); });
+document.getElementById('copySsid').addEventListener('click',async()=>{ await copyToClipboard(WIFI.ssid); alert('SSID copiado.'); });
+document.getElementById('copyPass').addEventListener('click',async()=>{ await copyToClipboard(WIFI.pass); alert('Senha copiada.'); });
+document.getElementById('wifiOpenAndroid').addEventListener('click',async()=>{
   await copyToClipboard(WIFI.pass);
-  const intent = 'intent:#Intent;action=android.settings.WIFI_SETTINGS;end';
-  let warned = false;
-  const tip = setTimeout(()=>{ if(!warned){ warned=true; alert('A senha já foi copiada. Abra o Wi-Fi do aparelho e cole.'); } }, 1200);
-  try { window.location.href = intent; } catch(e){ clearTimeout(tip); alert('A senha já foi copiada. Abra o Wi-Fi do aparelho e cole.'); }
+  const intent='intent:#Intent;action=android.settings.WIFI_SETTINGS;end';
+  let warned=false;
+  const tip=setTimeout(()=>{ if(!warned){ warned=true; alert('A senha já foi copiada. Abra o Wi-Fi do aparelho e cole.'); } },1200);
+  try{ window.location.href=intent; }catch(e){ clearTimeout(tip); alert('A senha já foi copiada. Abra o Wi-Fi do aparelho e cole.'); }
 });
 
-/* ====== PIX ====== */
-const PIX_KEY = '48991746304';
-const pixModal = document.getElementById('pixModal');
-document.getElementById('btnPix').addEventListener('click', async ()=>{
+/* ===== Pix modal + atalhos ===== */
+const pixModal=document.getElementById('pixModal');
+document.getElementById('btnPix').addEventListener('click',async()=>{
   await copyToClipboard(PIX_KEY);
   document.getElementById('pixCopiedMsg').classList.add('show');
   openModal(pixModal);
 });
-document.getElementById('closePix').addEventListener('click', ()=> closeModal(pixModal));
-pixModal.addEventListener('click', (e)=>{ if(e.target.id==='pixModal') closeModal(pixModal); });
+document.getElementById('closePix').addEventListener('click',()=>closeModal(pixModal));
+pixModal.addEventListener('click',e=>{ if(e.target.id==='pixModal') closeModal(pixModal); });
 
-/* Deep links para bancos com fallback de loja (Android) */
-const BANKS = {
-  nubank:      { scheme:'nubank://',        pkg:'com.nu.production' },
-  mercadopago: { scheme:'mercadopago://',   pkg:'com.mercadopago.wallet' },
-  itau:        { scheme:'itau://',          pkg:'com.itau' },
-  bradesco:    { scheme:'bradesco://',      pkg:'com.bradesco' },
-  caixa:       { scheme:'caixa://',         pkg:'br.gov.caixa.tem' },   // pode trocar pelo pacote do app que você usa
-  sicoob:      { scheme:'sicoob://',        pkg:'br.com.sicoob.app' }
+const isAndroidUA=/Android/i.test(navigator.userAgent);
+const isIOSUA=/iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+const BANKS={
+  nubank:{scheme:'nubank://',pkg:'com.nu.production'},
+  mercadopago:{scheme:'mercadopago://',pkg:'com.mercadopago.wallet'},
+  itau:{scheme:'itau://',pkg:'com.itau'},
+  bradesco:{scheme:'bradesco://',pkg:'com.bradesco'},
+  caixa:{scheme:'caixa://',pkg:'br.gov.caixa.tem'},
+  sicoob:{scheme:'sicoob://',pkg:'br.com.sicoob.app'}
 };
 
 function openBankApp(cfg){
-  const store = `https://play.google.com/store/apps/details?id=${cfg.pkg}`;
-
-  if(isAndroid){
-    // 1) tenta via intent (melhor pro Android moderno)
-    try{
-      window.location.href = `intent://open#Intent;package=${cfg.pkg};scheme=${cfg.scheme.replace('://','')};end`;
-    }catch(e){}
-    // 2) se nada abrir, após ~1.4s manda pra Play Store
-    setTimeout(()=>{ window.open(store, '_blank'); }, 1400);
-  }else if(isIOS){
-    // iOS: tenta o esquema via iframe oculto; não tem fallback universal
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = cfg.scheme;
-    document.body.appendChild(iframe);
-    setTimeout(()=>{ document.body.removeChild(iframe); }, 1500);
+  const store=`https://play.google.com/store/apps/details?id=${cfg.pkg}`;
+  if(isAndroidUA){
+    try{ window.location.href=`intent://open#Intent;package=${cfg.pkg};scheme=${cfg.scheme.replace('://','')};end`; }catch(e){}
+    setTimeout(()=>{ window.open(store,'_blank'); },1400);
+  }else if(isIOSUA){
+    const i=document.createElement('iframe'); i.style.display='none'; i.src=cfg.scheme;
+    document.body.appendChild(i); setTimeout(()=>document.body.removeChild(i),1500);
   }else{
-    // Web/Desktop: abre a página da loja Android
-    window.open(store, '_blank');
+    window.open(store,'_blank');
   }
 }
-
-document.getElementById('bankGrid').addEventListener('click', (e)=>{
-  const a = e.target.closest('a[data-app]'); if(!a) return;
-  e.preventDefault();
-  const cfg = BANKS[a.dataset.app];
-  if(cfg) openBankApp(cfg);
+document.getElementById('bankGrid').addEventListener('click',e=>{
+  const a=e.target.closest('a[data-app]'); if(!a) return;
+  e.preventDefault(); const cfg=BANKS[a.dataset.app]; if(cfg) openBankApp(cfg);
 });
 </script>
 </body>
