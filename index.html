@@ -13,7 +13,7 @@
   --tagline:#e3c676; --ring:rgba(255,255,255,.08);
   --ciano:#69dfd6; --roxinho:#a78bfa;
 
-  /* AJUSTE: gradientes mais bonitos p/ botões pequenos */
+  /* cores novas p/ botões pequenos */
   --turq-1:#aef3ff; --turq-2:#42c1d6; --turq-3:#128ca7;
 }
 
@@ -32,21 +32,21 @@ body::after{
   content:""; position:fixed; inset:0;
   background:linear-gradient(180deg, rgba(0,0,0,.40), rgba(0,0,0,.65) 50%, rgba(0,0,0,.85)); z-index:0;
 }
-/* AJUSTE: diminuir padding-top para subir logo e legenda */
+/* topo mais compacto p/ subir logo/legenda */
 .page{position:relative; z-index:1; max-width:480px; margin:0 auto; padding:12px 16px 40px}
 
 /* ===== Header ===== */
 .header{text-align:center; margin:0 0 6px}
 .logo{
   width:clamp(240px, 64vw, 340px);
-  display:block; margin:0 auto 4px; /* AJUSTE: menos espaço sob a logo */
+  display:block; margin:0 auto 4px;
   filter:drop-shadow(0 12px 22px rgba(0,0,0,.40));
   mix-blend-mode:multiply;
 }
 .tagline{
   color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase;
   font-size:clamp(16px,3.8vw,20px);
-  margin:0 auto 10px; /* AJUSTE: colada na logo */
+  margin:0 auto 10px;
 }
 
 /* ===== Cards ===== */
@@ -95,22 +95,20 @@ body::after{
 .btn--gold .sub{ color:#1f1f1f; opacity:.86 }
 
 /* ===== Botões pequenos do modal ===== */
-.btn-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:12px 0 } /* Copiar SSID removido */
+.btn-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:12px 0 }
 .btn-small{
   border:0; border-radius:12px; padding:10px 12px; font-weight:700; cursor:pointer;
   color:#0b0b0b; box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 8px 18px rgba(0,0,0,.25);
 }
-/* AJUSTE: “Copiar senha” em dourado */
+/* “Copiar senha” em dourado */
 .btn-pass{
   color:#191919;
-  background:
-    linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 45%, var(--gold-3) 80%);
+  background:linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 45%, var(--gold-3) 80%);
 }
-/* AJUSTE: “Abrir Wi-Fi (Android)” em turquesa */
+/* “Abrir Wi-Fi (Android)” em turquesa */
 .btn-open{
   color:#082a32;
-  background:
-    linear-gradient(180deg, var(--turq-1) 0%, var(--turq-2) 55%, var(--turq-3) 100%);
+  background:linear-gradient(180deg, var(--turq-1) 0%, var(--turq-2) 55%, var(--turq-3) 100%);
 }
 
 /* ===== VÍDEO ===== */
@@ -138,18 +136,25 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 .car-viewport{
   overflow:hidden; border-radius:16px; background:#000;
   box-shadow:inset 0 0 0 1px var(--ring), 0 8px 36px rgba(0,0,0,.45);
-  /* AJUSTE: manter proporção alta sem cortar imagem */
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 9 / 16;                /* mantém formato stories */
 }
 .car-track{ display:flex; transition:transform .45s ease; will-change:transform; height:100% }
 .car-slide{
+  position:relative; overflow:hidden;
   flex:0 0 100%;
-  display:grid; place-items:center; height:100%; background:#000; /* AJUSTE */
+  display:grid; place-items:center; height:100%; background:#000;
 }
+/* fundo desfocado que preenche as “faixas” */
+.car-slide::before{
+  content:""; position:absolute; inset:0;
+  background:var(--bg) center/cover no-repeat;
+  filter:blur(18px) brightness(.65);
+  transform:scale(1.08);
+}
+/* imagem principal sem corte */
 .car-slide img{
-  max-width:100%; max-height:100%;
-  width:auto; height:auto; display:block;
-  object-fit:contain; /* AJUSTE: não cortar mais */
+  width:100%; height:100%; display:block;
+  object-fit:contain;
 }
 .car-arrow{
   position:absolute; top:50%; transform:translateY(-50%);
@@ -205,7 +210,7 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
     </header>
 
     <section class="stack">
-      <!-- AJUSTE: agendar no mesmo estilo dos demais (escuro) -->
+      <!-- Agendar no mesmo estilo dos demais (escuro) -->
       <a class="btn btn--dark" href="#" id="btnAgendar">
         <img class="icon" src="media/media:calendar.png" alt="Calendário">
         <div>
@@ -246,7 +251,7 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         </div>
       </a>
 
-      <!-- AJUSTE: Removido o botão lateral “Copiar chave”; bloco inteiro abre o modal e copia -->
+      <!-- PIX: sem botão lateral; card inteiro abre o QR e copia a chave -->
       <div class="btn btn--dark" id="pixRow" role="button" tabindex="0" aria-label="Pagamento via Pix, copiar chave">
         <img class="icon" src="media/media:pix.png" alt="Pix">
         <div style="flex:1">
@@ -305,7 +310,7 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         <div class="qr-wrap"><img id="wifiQr" alt="QR do Wi-Fi"></div>
         <div class="center" id="wifiRede">Rede:</div>
         <div class="btn-row">
-          <!-- AJUSTE: REMOVIDO “Copiar SSID” -->
+          <!-- Removido: Copiar SSID -->
           <button class="btn-small btn-pass" id="copyPass">Copiar senha</button>
           <button class="btn-small btn-open" id="wifiOpenAndroid">Abrir Wi-Fi (Android)</button>
         </div>
@@ -386,6 +391,16 @@ const isIOS     = /iPhone|iPad|iPod/i.test(navigator.userAgent);
   go(0); start();
 })();
 
+/* ===== Blur fill da galeria (usa a própria foto como fundo) ===== */
+(function blurFill(){
+  document.querySelectorAll('.car-slide').forEach(slide=>{
+    const img = slide.querySelector('img');
+    if(img && img.src){
+      slide.style.setProperty('--bg', `url('${img.src}')`);
+    }
+  });
+})();
+
 /* ===== Modal helpers ===== */
 function openModal(el){ el.classList.add('open'); el.setAttribute('aria-hidden','false'); }
 function closeModal(el){ el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
@@ -403,7 +418,7 @@ document.getElementById('btnWifi').addEventListener('click', (e)=>{
 document.getElementById('closeWifi').addEventListener('click', ()=> closeModal(wifiModal));
 wifiModal.addEventListener('click', (e)=>{ if(e.target.id==='wifiModal') closeModal(wifiModal); });
 
-/* AJUSTE: removido “Copiar SSID” */
+/* Sem “Copiar SSID” */
 document.getElementById('copyPass').addEventListener('click', async ()=>{ await copyToClipboard(WIFI.pass); alert('Senha copiada.'); });
 document.getElementById('wifiOpenAndroid').addEventListener('click', async ()=>{
   await copyToClipboard(WIFI.pass);
@@ -435,8 +450,8 @@ function buildPixPayload(key, name, city, msg){
   const descField  = msg ? tlv('02', msg) : '';
   const merAccInfo = tlv('26', gui + keyField + descField);
   const payload =
-    tlv('00','01') +           // Payload Format Indicator
-    tlv('01','12') +           // Ponto de iniciação (12/11). Mantido como no seu código
+    tlv('00','01') +
+    tlv('01','12') +
     merAccInfo +
     tlv('52','0000') +
     tlv('53','986') +
@@ -455,13 +470,13 @@ function openPix(){
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent(payload)}&margin=10`;
   document.getElementById('pixQr').src = qrUrl;
   document.getElementById('pixKeyText').textContent = `Chave: ${PIX_KEY}`;
-  copyToClipboard(PIX_KEY); // copia na abertura
+  copyToClipboard(PIX_KEY);           // copia na abertura
   const msg = document.getElementById('pixCopiedMsg');
   msg.style.display = 'block';
   setTimeout(()=> msg.style.display='none', 1500);
   openModal(pixModal);
 }
-/* AJUSTE: sem botão lateral — o card inteiro abre o Pix */
+/* Card inteiro abre o Pix */
 document.getElementById('pixRow').addEventListener('click', openPix);
 document.getElementById('pixRow').addEventListener('keypress', (e)=>{ if(e.key==='Enter' || e.key===' ') openPix(); });
 
