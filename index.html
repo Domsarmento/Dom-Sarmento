@@ -12,6 +12,9 @@
   --steel-top:#3b3b3b; --steel-mid:#262626; --steel-bot:#141414;
   --tagline:#e3c676; --ring:rgba(255,255,255,.08);
   --ciano:#69dfd6; --roxinho:#a78bfa;
+
+  /* AJUSTE: gradientes mais bonitos p/ botões pequenos */
+  --turq-1:#aef3ff; --turq-2:#42c1d6; --turq-3:#128ca7;
 }
 
 *{box-sizing:border-box}
@@ -29,20 +32,21 @@ body::after{
   content:""; position:fixed; inset:0;
   background:linear-gradient(180deg, rgba(0,0,0,.40), rgba(0,0,0,.65) 50%, rgba(0,0,0,.85)); z-index:0;
 }
-.page{position:relative; z-index:1; max-width:480px; margin:0 auto; padding:24px 16px 40px}
+/* AJUSTE: diminuir padding-top para subir logo e legenda */
+.page{position:relative; z-index:1; max-width:480px; margin:0 auto; padding:12px 16px 40px}
 
 /* ===== Header ===== */
 .header{text-align:center; margin:0 0 6px}
 .logo{
   width:clamp(240px, 64vw, 340px);
-  display:block; margin:0 auto 6px;
+  display:block; margin:0 auto 4px; /* AJUSTE: menos espaço sob a logo */
   filter:drop-shadow(0 12px 22px rgba(0,0,0,.40));
   mix-blend-mode:multiply;
 }
 .tagline{
   color:var(--tagline); font-weight:800; letter-spacing:.06em; text-transform:uppercase;
   font-size:clamp(16px,3.8vw,20px);
-  margin:4px auto 10px;
+  margin:0 auto 10px; /* AJUSTE: colada na logo */
 }
 
 /* ===== Cards ===== */
@@ -89,11 +93,24 @@ body::after{
 .sub{ font-size:clamp(12px,3.2vw,14px); color:var(--muted); margin-top:3px }
 .btn--gold .title{ color:#121212 }
 .btn--gold .sub{ color:#1f1f1f; opacity:.86 }
-.chip{
-  flex:0 0 auto; border:0; cursor:pointer; padding:8px 12px; border-radius:12px;
-  background:var(--ciano); color:#083033; font-weight:800; font-size:12px;
-  line-height:1.1; text-align:center; white-space:nowrap;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
+
+/* ===== Botões pequenos do modal ===== */
+.btn-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:12px 0 } /* Copiar SSID removido */
+.btn-small{
+  border:0; border-radius:12px; padding:10px 12px; font-weight:700; cursor:pointer;
+  color:#0b0b0b; box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 8px 18px rgba(0,0,0,.25);
+}
+/* AJUSTE: “Copiar senha” em dourado */
+.btn-pass{
+  color:#191919;
+  background:
+    linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 45%, var(--gold-3) 80%);
+}
+/* AJUSTE: “Abrir Wi-Fi (Android)” em turquesa */
+.btn-open{
+  color:#082a32;
+  background:
+    linear-gradient(180deg, var(--turq-1) 0%, var(--turq-2) 55%, var(--turq-3) 100%);
 }
 
 /* ===== VÍDEO ===== */
@@ -121,11 +138,18 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
 .car-viewport{
   overflow:hidden; border-radius:16px; background:#000;
   box-shadow:inset 0 0 0 1px var(--ring), 0 8px 36px rgba(0,0,0,.45);
+  /* AJUSTE: manter proporção alta sem cortar imagem */
+  aspect-ratio: 9 / 16;
 }
-.car-track{ display:flex; transition:transform .45s ease; will-change:transform }
-.car-slide{ flex:0 0 100% }
+.car-track{ display:flex; transition:transform .45s ease; will-change:transform; height:100% }
+.car-slide{
+  flex:0 0 100%;
+  display:grid; place-items:center; height:100%; background:#000; /* AJUSTE */
+}
 .car-slide img{
-  width:100%; height:auto; display:block; aspect-ratio:9/16; object-fit:cover;
+  max-width:100%; max-height:100%;
+  width:auto; height:auto; display:block;
+  object-fit:contain; /* AJUSTE: não cortar mais */
 }
 .car-arrow{
   position:absolute; top:50%; transform:translateY(-50%);
@@ -160,14 +184,6 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
 }
 .qr-wrap img{ width:100%; height:auto; display:block }
-.btn-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:12px 0 }
-.btn-small{
-  border:0; border-radius:12px; padding:10px 12px; font-weight:700; cursor:pointer;
-  color:#0b0b0b;
-}
-.btn-ssid{ background:var(--ciano) }
-.btn-pass{ background:var(--roxinho); color:#fff }
-.btn-open{ background:var(--ciano) }
 
 /* bloco Pix inteiro clicável */
 #pixRow{ cursor:pointer }
@@ -178,7 +194,6 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
   .icon{ width:34px; height:34px }
   .title{ font-size:15px }
   .sub{ font-size:12px }
-  .chip{ font-size:11px; padding:7px 10px }
 }
 </style>
 </head>
@@ -190,7 +205,8 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
     </header>
 
     <section class="stack">
-      <a class="btn btn--gold" href="#" id="btnAgendar">
+      <!-- AJUSTE: agendar no mesmo estilo dos demais (escuro) -->
+      <a class="btn btn--dark" href="#" id="btnAgendar">
         <img class="icon" src="media/media:calendar.png" alt="Calendário">
         <div>
           <div class="title">Agendar horário</div>
@@ -230,14 +246,13 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         </div>
       </a>
 
-      <!-- Bloco inteiro do Pix clicável -->
+      <!-- AJUSTE: Removido o botão lateral “Copiar chave”; bloco inteiro abre o modal e copia -->
       <div class="btn btn--dark" id="pixRow" role="button" tabindex="0" aria-label="Pagamento via Pix, copiar chave">
         <img class="icon" src="media/media:pix.png" alt="Pix">
         <div style="flex:1">
           <div class="title">Pagamento via Pix</div>
           <div class="sub">@domsarmento</div>
         </div>
-        <button class="chip" id="btnPix">COPIAR CHAVE<br>49991746304</button>
       </div>
     </section>
 
@@ -290,10 +305,10 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
         <div class="qr-wrap"><img id="wifiQr" alt="QR do Wi-Fi"></div>
         <div class="center" id="wifiRede">Rede:</div>
         <div class="btn-row">
-          <button class="btn-small btn-ssid" id="copySsid">Copiar SSID</button>
+          <!-- AJUSTE: REMOVIDO “Copiar SSID” -->
           <button class="btn-small btn-pass" id="copyPass">Copiar senha</button>
+          <button class="btn-small btn-open" id="wifiOpenAndroid">Abrir Wi-Fi (Android)</button>
         </div>
-        <div class="center"><button class="btn-small btn-open" id="wifiOpenAndroid">Abrir Wi-Fi (Android)</button></div>
         <div class="note">Aponte a câmera para o QR para conectar automaticamente. No iPhone, abra Ajustes &gt; Wi-Fi.</div>
       </div>
     </div>
@@ -309,9 +324,9 @@ video{ width:100%; height:auto; aspect-ratio:9/16; display:block }
       <div class="body">
         <div class="qr-wrap"><img id="pixQr" alt="QR Code do Pix"></div>
         <div class="center" id="pixKeyText" style="font-size:14px; opacity:.9"></div>
-        <div class="copy-ok" id="pixCopiedMsg" style="display:block; text-align:center; margin-top:8px; color:#9ae6b4; font-weight:800">✅ Chave PIX copiada!</div>
+        <div class="copy-ok" id="pixCopiedMsg" style="display:none; text-align:center; margin-top:8px; color:#9ae6b4; font-weight:800">✅ Chave PIX copiada!</div>
         <div class="center" style="margin-top:6px">
-          <button class="btn-small btn-ssid" id="copyPixAgain">Copiar chave novamente</button>
+          <button class="btn-small btn-open" id="copyPixAgain">Copiar chave novamente</button>
         </div>
       </div>
     </div>
@@ -326,7 +341,7 @@ const WIFI = {
 };
 const PIX_KEY = '49991746304';
 const PIX_NAME = 'DOM SARMENTO';
-const PIX_CITY = 'BRASIL';    // pode ajustar para a sua cidade
+const PIX_CITY = 'BRASIL';
 
 /* Utils */
 async function copyToClipboard(text){ try { await navigator.clipboard.writeText(text); } catch(e) {} }
@@ -388,7 +403,7 @@ document.getElementById('btnWifi').addEventListener('click', (e)=>{
 document.getElementById('closeWifi').addEventListener('click', ()=> closeModal(wifiModal));
 wifiModal.addEventListener('click', (e)=>{ if(e.target.id==='wifiModal') closeModal(wifiModal); });
 
-document.getElementById('copySsid').addEventListener('click', async ()=>{ await copyToClipboard(WIFI.ssid); alert('SSID copiado.'); });
+/* AJUSTE: removido “Copiar SSID” */
 document.getElementById('copyPass').addEventListener('click', async ()=>{ await copyToClipboard(WIFI.pass); alert('Senha copiada.'); });
 document.getElementById('wifiOpenAndroid').addEventListener('click', async ()=>{
   await copyToClipboard(WIFI.pass);
@@ -399,7 +414,6 @@ document.getElementById('wifiOpenAndroid').addEventListener('click', async ()=>{
 });
 
 /* ====== PIX (copia e mostra QR apenas) ====== */
-/* Gera BR Code EMV para Pix (estático) */
 function tlv(id, value){
   const len = value.length.toString().padStart(2,'0');
   return id + len + value;
@@ -422,16 +436,15 @@ function buildPixPayload(key, name, city, msg){
   const merAccInfo = tlv('26', gui + keyField + descField);
   const payload =
     tlv('00','01') +           // Payload Format Indicator
-    tlv('01','12') +           // Point of Initiation Method (12 = dinâmico; 11 = estático) – usamos 12 para melhor compat
+    tlv('01','12') +           // Ponto de iniciação (12/11). Mantido como no seu código
     merAccInfo +
-    tlv('52','0000') +         // MCC
-    tlv('53','986') +          // Moeda BRL
-    /* tlv('54','') */         // Valor (opcional)
-    tlv('58','BR') +           // País
-    tlv('59', (name || 'MERCHANT').substring(0,25)) + // Nome (máx 25)
-    tlv('60', (city || 'BRASIL').substring(0,15)) +   // Cidade (máx 15)
-    tlv('62', tlv('05','***')) + // Ref label
-    '6304';                    // CRC placeholder
+    tlv('52','0000') +
+    tlv('53','986') +
+    tlv('58','BR') +
+    tlv('59', (name || 'MERCHANT').substring(0,25)) +
+    tlv('60', (city || 'BRASIL').substring(0,15)) +
+    tlv('62', tlv('05','***')) +
+    '6304';
   const crc = crc16(payload);
   return payload + crc;
 }
@@ -443,9 +456,12 @@ function openPix(){
   document.getElementById('pixQr').src = qrUrl;
   document.getElementById('pixKeyText').textContent = `Chave: ${PIX_KEY}`;
   copyToClipboard(PIX_KEY); // copia na abertura
+  const msg = document.getElementById('pixCopiedMsg');
+  msg.style.display = 'block';
+  setTimeout(()=> msg.style.display='none', 1500);
   openModal(pixModal);
 }
-document.getElementById('btnPix').addEventListener('click', (e)=>{ e.stopPropagation(); openPix(); });
+/* AJUSTE: sem botão lateral — o card inteiro abre o Pix */
 document.getElementById('pixRow').addEventListener('click', openPix);
 document.getElementById('pixRow').addEventListener('keypress', (e)=>{ if(e.key==='Enter' || e.key===' ') openPix(); });
 
